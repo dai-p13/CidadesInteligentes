@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">CidadesInteligentes</string>
+    <string name="app_name">Inteligents Cities</string>
+    <string name="reporte_problema">Report Problem</string>
+    <string name="notes">Notes</string>
 </resources>
