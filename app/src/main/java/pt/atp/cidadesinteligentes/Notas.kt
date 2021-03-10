@@ -41,7 +41,7 @@ class Notas : AppCompatActivity() {
             val intent = Intent(this@Notas, AddNota::class.java)
             startActivityForResult(intent, newWordActivityRequestCode)
         }
-        val buttonBack = findViewById<Button>(R.id.button2)
+        val buttonBack = findViewById<Button>(R.id.buttonBack)
         buttonBack.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
