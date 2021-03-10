@@ -3,4 +3,13 @@
     <string name="app_name">CidadesInteligentes</string>
     <string name="reporte_problema">Reporte problema</string>
     <string name="notes">Notas</string>
+    <string name="title">Titulo</string>
+    <string name="description">Descrição</string>
+    <string name="hint1">Adicione um titulo</string>
+    <string name="hint2">Adicione uma descrição</string>
+    <string name="back">Voltar</string>
+    <string name="save">Guardar</string>
+    <string name="empty">Titulo vazio: nao inserido</string>
+    <string name="add">Adicionar</string>
+    <string name="cancel">Cancelar</string>
 </resources>
