@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddNota">
+    tools:context=".EditNota">
 
     <TextView
         android:id="@+id/textView"
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
-        android:hint="@string/hint1"
+        android:hint="@string/hint3"
         android:inputType="textAutoComplete"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
-        android:hint="@string/hint2"
+        android:hint="@string/hint4"
         android:inputType="textAutoComplete"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -69,11 +69,11 @@
         app:layout_constraintVertical_bias="1.0">
 
         <Button
-            android:id="@+id/save"
+            android:id="@+id/edit"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_weight="1"
-            android:text="@string/save"
+            android:text="@string/edit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/back"
             app:layout_constraintHorizontal_bias="0.5"

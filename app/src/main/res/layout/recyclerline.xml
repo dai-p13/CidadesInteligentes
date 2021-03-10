@@ -18,24 +18,28 @@
         android:text="Note"
         android:textStyle="bold"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/delete"
-        android:layout_width="27dp"
-        android:layout_height="28dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_alignTop="@id/note"
         android:layout_alignParentRight="true"
         android:layout_marginTop="-6dp"
         android:layout_marginRight="16dp"
-        android:src="@drawable/ic_garbage_bin_svgrepo_com"/>
+        android:layout_alignParentEnd="true"
+        android:onClick="Edit"
+        android:src="@drawable/ic_baseline_delete_24"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/edit"
-        android:layout_width="25dp"
-        android:layout_height="28dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_alignTop="@id/note"
         android:layout_alignParentRight="true"
         android:layout_marginTop="-6dp"
+        android:layout_marginEnd="64dp"
         android:layout_marginRight="64dp"
-        android:src="@drawable/ic_pencil_svgrepo_com"/>
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_baseline_edit_24"/>
 
 </RelativeLayout>

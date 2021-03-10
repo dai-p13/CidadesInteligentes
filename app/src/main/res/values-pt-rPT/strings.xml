@@ -12,4 +12,7 @@
     <string name="empty">Titulo vazio: nao inserido</string>
     <string name="add">Adicionar</string>
     <string name="cancel">Cancelar</string>
+    <string name="edit">Editar</string>
+    <string name="hint3">Edite o titulo</string>
+    <string name="hint4">Edite a descrição</string>
 </resources>
