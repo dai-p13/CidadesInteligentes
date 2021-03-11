@@ -24,12 +24,12 @@ class EditNota : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_nota)
 
-        val message = intent.getStringExtra(TITULO)
-        val message2 = intent.getStringExtra(DESCRICAO)
+        val editTitl = intent.getStringExtra(TITULO)
+        val editDesc = intent.getStringExtra(DESCRICAO)
 
 
-        findViewById<EditText>(R.id.title).setText(message)
-        findViewById<EditText>(R.id.description).setText(message2)
+        findViewById<EditText>(R.id.title).setText(editTitl)
+        findViewById<EditText>(R.id.description).setText(editDesc)
 
         notaViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
 
