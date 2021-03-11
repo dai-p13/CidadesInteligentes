@@ -66,4 +66,8 @@ class Notas : AppCompatActivity() {
                     Toast.LENGTH_LONG).show()
         }
     }
+
+    /*override fun passResultCallback(id: Int?) {
+        noteViewModel.deleteAll(id)
+    }*/
 }

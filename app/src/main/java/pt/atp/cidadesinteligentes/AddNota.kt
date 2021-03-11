@@ -33,7 +33,7 @@ class AddNota : AppCompatActivity() {
             finish()
         }
 
-        val buttonBack = findViewById<Button>(R.id.back)
+        val buttonBack = findViewById<Button>(R.id.cancel)
         buttonBack.setOnClickListener{
             val intent = Intent(this, Notas::class.java)
             startActivity(intent)
