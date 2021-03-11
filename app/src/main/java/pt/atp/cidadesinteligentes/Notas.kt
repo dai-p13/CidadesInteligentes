@@ -14,7 +14,7 @@ import pt.atp.cidadesinteligentes.adapter.NoteAdapter
 import pt.atp.cidadesinteligentes.ententies.Notes
 import pt.atp.cidadesinteligentes.viewModel.NoteViewModel
 
-class Notas : AppCompatActivity() {
+class Notas : AppCompatActivity(), NoteAdapter.CallbackInterface {
 
     private lateinit var noteViewModel: NoteViewModel
     private val newWordActivityRequestCode = 1
@@ -25,7 +25,7 @@ class Notas : AppCompatActivity() {
 
         //recycler view
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-        val adapter = NoteAdapter(this)
+        val adapter = NoteAdapter(this, this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -67,7 +67,7 @@ class Notas : AppCompatActivity() {
         }
     }
 
-    /*override fun passResultCallback(id: Int?) {
-        noteViewModel.deleteAll(id)
-    }*/
+    override fun passResultCallback(id: Int?) {
+        noteViewModel.deleteById(id)
+    }
 }

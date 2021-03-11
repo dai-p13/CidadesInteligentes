@@ -38,5 +38,9 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     fun updateNote(note: Notes) = viewModelScope.launch {
         repository.updateNote(note)
     }
+
+    fun deleteById(id: Int?) = viewModelScope.launch {
+        repository.deleteById(id)
+    }
 }
 

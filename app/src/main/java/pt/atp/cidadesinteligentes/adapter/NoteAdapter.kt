@@ -18,12 +18,12 @@ const val DESCRICAO="DESCRICAO"
 const val ID="ID"
 
 class NoteAdapter internal constructor(
-    context: Context
+    context: Context, private val callbackInterface:CallbackInterface
 ) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var notes = emptyList<Notes>() // Cached copy of cities
-    //private val callbackInterface:CallbackInterface
+
     interface CallbackInterface {
         fun passResultCallback(id: Int?)
     }
@@ -46,9 +46,9 @@ class NoteAdapter internal constructor(
         holder.descr.text = current.description
         val id: Int? = current.id
 
-        /*holder.delete.setOnClickListener {
+        holder.delete.setOnClickListener {
             callbackInterface.passResultCallback(current.id)
-        }*/
+        }
 
         holder.edit.setOnClickListener {
             val context = holder.noteItemView.context
