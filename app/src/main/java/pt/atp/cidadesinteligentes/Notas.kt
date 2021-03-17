@@ -17,7 +17,7 @@ import pt.atp.cidadesinteligentes.viewModel.NoteViewModel
 class Notas : AppCompatActivity(), NoteAdapter.CallbackInterface {
 
     private lateinit var noteViewModel: NoteViewModel
-    private val newWordActivityRequestCode = 1
+    private val newNoteActivityRequestCode = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class Notas : AppCompatActivity(), NoteAdapter.CallbackInterface {
         val buttaoAd = findViewById<Button>(R.id.buttonAdd)
         buttaoAd.setOnClickListener{
             val intent = Intent(this@Notas, AddNota::class.java)
-            startActivityForResult(intent, newWordActivityRequestCode)
+            startActivityForResult(intent, newNoteActivityRequestCode)
         }
         val buttonBack = findViewById<Button>(R.id.buttonBack)
         buttonBack.setOnClickListener{
@@ -50,20 +50,17 @@ class Notas : AppCompatActivity(), NoteAdapter.CallbackInterface {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
+        if (requestCode == newNoteActivityRequestCode && resultCode == Activity.RESULT_OK) {
             val ptitle = data?.getStringExtra(AddNota.EXTRA_REPLY_TITLE)
             val pdescription = data?.getStringExtra(AddNota.EXTRA_REPLY_DESCRIPTION)
 
-            if (ptitle!= null && pdescription != null) {
+            if (ptitle != null && pdescription != null) {
                 val city = Notes(title = ptitle, description = pdescription)
                 noteViewModel.insert(city)
             }
 
         } else {
-            Toast.makeText(
-                    applicationContext,
-                    R.string.empty,
-                    Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, R.string.empty, Toast.LENGTH_LONG).show()
         }
     }
 

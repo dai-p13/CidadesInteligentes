@@ -8,6 +8,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import pt.atp.cidadesinteligentes.adapter.DESCRICAO
 import pt.atp.cidadesinteligentes.adapter.ID
@@ -19,6 +20,7 @@ class EditNota : AppCompatActivity() {
     private lateinit var desc: EditText
     private lateinit var title: EditText
     private lateinit var notaViewModel: NoteViewModel
+    private val newNoteActivityRequestCode2 = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +51,8 @@ class EditNota : AppCompatActivity() {
         val replyIntent = Intent()
         if (TextUtils.isEmpty(title.text) || TextUtils.isEmpty(desc.text))  {
             setResult(Activity.RESULT_CANCELED, replyIntent)
-
+            startActivityForResult(intent, newNoteActivityRequestCode2)
+            Toast.makeText(applicationContext, R.string.empty, Toast.LENGTH_LONG).show()
         } else {
             val nota = Notes(id = message3, title = title.text.toString(), description = desc.text.toString())
             notaViewModel.updateNote(nota)

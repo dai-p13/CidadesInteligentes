@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 
 class AddNota : AppCompatActivity() {
 
     private lateinit var titleText: EditText
     private lateinit var descriptionText: EditText
+    private val newNoteActivityRequestCode2 = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,8 +25,10 @@ class AddNota : AppCompatActivity() {
         val button = findViewById<Button>(R.id.save)
         button.setOnClickListener {
             val replyIntent = Intent()
-            if (TextUtils.isEmpty(titleText.text)) {
+            if (TextUtils.isEmpty(titleText.text) || TextUtils.isEmpty(descriptionText.text)) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
+                startActivityForResult(intent, newNoteActivityRequestCode2)
+                Toast.makeText(applicationContext, R.string.empty, Toast.LENGTH_LONG).show()
             } else {
                 replyIntent.putExtra(EXTRA_REPLY_TITLE, titleText.text.toString())
                 replyIntent.putExtra(EXTRA_REPLY_DESCRIPTION, descriptionText.text.toString())

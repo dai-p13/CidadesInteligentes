@@ -9,10 +9,11 @@
     <string name="hint2">Adicione uma descrição</string>
     <string name="back">Voltar</string>
     <string name="save">Guardar</string>
-    <string name="empty">Titulo vazio: nao inserido</string>
+    <string name="empty">Titulo/Descrição vazio: Não inserido</string>
     <string name="add">Adicionar</string>
     <string name="cancel">Cancelar</string>
     <string name="edit">Editar</string>
     <string name="hint3">Edite o titulo</string>
     <string name="hint4">Edite a descrição</string>
+    <string name="blank_edit">Titulo/Descrição vazio: Não editado</string>
 </resources>
