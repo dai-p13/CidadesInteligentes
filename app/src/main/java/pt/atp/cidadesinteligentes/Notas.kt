@@ -1,6 +1,7 @@
 package pt.atp.cidadesinteligentes
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -65,6 +66,17 @@ class Notas : AppCompatActivity(), NoteAdapter.CallbackInterface {
     }
 
     override fun passResultCallback(id: Int?) {
-        noteViewModel.deleteById(id)
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.alert)
+        builder.setMessage(R.string.del)
+        builder.setPositiveButton(R.string.yes){ dialog, which ->
+            Toast.makeText(applicationContext, R.string.delete, Toast.LENGTH_LONG).show()
+            noteViewModel.deleteById(id)
+        }
+        builder.setNegativeButton(R.string.no){dialog, which ->
+        }
+        builder.show()
+
+
     }
 }

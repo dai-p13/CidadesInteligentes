@@ -16,4 +16,12 @@
     <string name="hint3">Edite o titulo</string>
     <string name="hint4">Edite a descrição</string>
     <string name="blank_edit">Titulo/Descrição vazio: Não editado</string>
+    <string name="delete">Nota apagada</string>
+    <string name="alert">Alerta</string>
+    <string name="del">Tens a certeza que queres eliminar esta nota?</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="login">Inicie Sessão</string>
+    <string name="username">Utilizador</string>
+    <string name="password">Palavra-passe</string>
 </resources>
