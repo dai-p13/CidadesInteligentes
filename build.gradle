@@ -34,6 +34,7 @@ ext {
     junitVersion = '4.13.1'
     espressoVersion = '3.1.0'
     androidxJunitVersion = '1.1.2'
+    version_retrofit = '2.4.0'
 }
 
 task clean(type: Delete) {
