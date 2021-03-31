@@ -17,6 +17,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, Notas::class.java)
             startActivity(intent)
         }
+
+        val button2 = findViewById<Button>(R.id.buttonMap)
+        button2.setOnClickListener{
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 }
