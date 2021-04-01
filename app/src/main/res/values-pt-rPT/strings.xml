@@ -24,4 +24,6 @@
     <string name="login">Inicie Sessão</string>
     <string name="username">Utilizador</string>
     <string name="password">Palavra-passe</string>
+    <string name="mine">Minhas</string>
+    <string name="all">Todas</string>
 </resources>

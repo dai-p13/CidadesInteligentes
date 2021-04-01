@@ -4,6 +4,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface EndPoints{
-    @GET("/api/ocorrencias")
+    @GET("/myslim/api/ocorrencias")
     fun getOcorrencias(): Call<List<Ocorrencia>>
 }

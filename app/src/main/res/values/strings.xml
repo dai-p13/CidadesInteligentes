@@ -24,4 +24,6 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="title_activity_maps">Map</string>
+    <string name="mine">Mine</string>
+    <string name="all">All</string>
 </resources>

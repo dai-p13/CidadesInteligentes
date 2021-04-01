@@ -5,15 +5,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-
 import android.widget.Toast
-
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import pt.atp.cidadesinteligentes.adapter.OcorrenciaAdapter
 import pt.atp.cidadesinteligentes.api.EndPoints
 import pt.atp.cidadesinteligentes.api.Ocorrencia
 import pt.atp.cidadesinteligentes.api.ServiceBuilder
@@ -21,56 +16,32 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class ListaOcorrencias : AppCompatActivity() {
 
-    private lateinit var mMap: GoogleMap
-    private lateinit var ocorrencia: List<Ocorrencia>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_maps)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        setContentView(R.layout.activity_lista_ocorrencias)
 
-        val request =  ServiceBuilder.buildService(EndPoints::class.java)
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_ocorr)
+        val request = ServiceBuilder.buildService(EndPoints::class.java)
         val call = request.getOcorrencias()
-        var position: LatLng
+
         call.enqueue(object : Callback<List<Ocorrencia>> {
             override fun onResponse(call: Call<List<Ocorrencia>>, response: Response<List<Ocorrencia>>) {
-                if(response.isSuccessful){
-                    ocorrencia = response.body()!!
-                    for (ocorr in ocorrencia) {
-                        position = LatLng(ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
-                        mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao))
+                if (response.isSuccessful){
+                    recyclerView.apply{
+                        setHasFixedSize(true)
+                        layoutManager = LinearLayoutManager(this@ListaOcorrencias)
+                        adapter = OcorrenciaAdapter(response.body()!!)
                     }
                 }
             }
-
             override fun onFailure(call: Call<List<Ocorrencia>>, t: Throwable) {
-                Toast.makeText(this@MapsActivity, "${t.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ListaOcorrencias, "${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
-
-    }
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-
-        // Add a marker in Sydney and move the camera
-        /*val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
