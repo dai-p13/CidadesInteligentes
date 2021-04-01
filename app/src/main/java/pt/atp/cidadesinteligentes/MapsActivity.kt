@@ -39,7 +39,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 if(response.isSuccessful){
                     ocorrencia = response.body()!!
                     for (ocorr in ocorrencia) {
-                        position = LatLng(ocorr.latitude.toString().toDouble(), ocorr.longitude.toString().toDouble())
+                        position = LatLng(ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
                         mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao))
                     }
                 }
