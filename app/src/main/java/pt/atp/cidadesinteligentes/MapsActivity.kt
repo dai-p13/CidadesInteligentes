@@ -74,7 +74,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             override fun onLocationResult(p0: LocationResult) {
                 super.onLocationResult(p0)
                 lastLocation = p0.lastLocation
-                var loc = LatLng(lastLocation.latitude, lastLocation.longitude)
+                val loc = LatLng(lastLocation.latitude, lastLocation.longitude)
                 //mMap.addMarker(MarkerOptions().position(loc).title("Marker"))
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 15.0f))
                 /*// preenche as coordenadas
@@ -94,7 +94,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         createLocationRequest()
 
     }
-
+    //
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
