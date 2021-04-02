@@ -26,4 +26,8 @@
     <string name="password">Palavra-passe</string>
     <string name="mine">Minhas</string>
     <string name="all">Todas</string>
+    <string name="title_activity_maps">Mapa</string>
+    <string name="remember">Lembrar nome de utilizador</string>
+    <string name="error">Username/ Password Incorretos</string>
+    <string name="blank">Username/ Password Vazios</string>
 </resources>

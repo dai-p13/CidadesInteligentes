@@ -1,5 +1,6 @@
 package pt.atp.cidadesinteligentes
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
@@ -77,11 +78,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val loc = LatLng(lastLocation.latitude, lastLocation.longitude)
                 //mMap.addMarker(MarkerOptions().position(loc).title("Marker"))
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 15.0f))
-                /*// preenche as coordenadas
-                findViewById<TextView>(com.google.android.gms.location.R.id.txtcoordenadas).setText("Lat: " + loc.latitude + " - Long: " + loc.longitude)
+                // preenche as coordenadas
+                findViewById<TextView>(R.id.txtcoordenadas).setText("Lat: " + loc.latitude + " - Long: " + loc.longitude)
+
                 // reverse geocoding
-                val address = getAddress(lastLocation.latitude, lastLocation.longitude)
+                /*val address = getAddress(lastLocation.latitude, lastLocation.longitude)
                 findViewById<TextView>(com.google.android.gms.location.R.id.txtmorada).setText("Morada: " + address)
+
                 // distancia
                 findViewById<TextView>(com.google.android.gms.location.R.id.txtdistancia).setText("Distância: " + calculateDistance(
                     lastLocation.latitude, lastLocation.longitude,
@@ -177,8 +180,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         return when (item.itemId){
 
-            R.id.listarTodas -> {
-
+            R.id.listarTodas ->{
+                val intent = Intent(this, ListaOcorrencias::class.java)
+                startActivity(intent)
                 true
 
             }
