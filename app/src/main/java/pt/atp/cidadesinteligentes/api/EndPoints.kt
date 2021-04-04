@@ -13,6 +13,9 @@ interface EndPoints{
     @GET("/myslim/api/users")
     fun getUsers(): Call<List<Users>>
 
+    @GET("/myslim/api/tipo")
+    fun getTipos(): Call<List<Tipo>>
+
     @FormUrlEncoded
     @POST("/myslim/api/ocorrencias")
     fun addOcorrencias(@Field("titulo") first: String?, @Field("descricao") second: String?,

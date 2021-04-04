@@ -1,40 +1,41 @@
 package pt.atp.cidadesinteligentes
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.view.get
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import pt.atp.cidadesinteligentes.api.EndPoints
-import pt.atp.cidadesinteligentes.api.Ocorrencia
 import pt.atp.cidadesinteligentes.api.OutputPost
 import pt.atp.cidadesinteligentes.api.ServiceBuilder
-import pt.atp.cidadesinteligentes.ententies.Notes
+import pt.atp.cidadesinteligentes.api.Tipo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.sql.Array
 
-class AddOcorrencia : AppCompatActivity() {
+class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private lateinit var imageView: ImageView
     private lateinit var title: EditText
     private lateinit var description: EditText
+    private lateinit var tipo: List<Tipo>
 
     private lateinit var button: Button
     private lateinit var buttonBack: Button
     private lateinit var buttonAdd: Button
+    private lateinit var spinner: Spinner
 
     private val newOcorrActivityRequestCode = 1
 
@@ -74,15 +75,47 @@ class AddOcorrencia : AppCompatActivity() {
                 startActivityForResult(intent, newOcorrActivityRequestCode)
                 Toast.makeText(applicationContext, R.string.empty, Toast.LENGTH_LONG).show()
             } else {
-                replyIntent.putExtra(EXTRA_REPLY_TITLE, title.text.toString())
-                replyIntent.putExtra(EXTRA_REPLY_DESCRIPTION, description.text.toString())
-                replyIntent.putExtra(EXTRA_REPLY_LATITUDE, lastLocation.latitude.toString())
-                replyIntent.putExtra(EXTRA_REPLY_LONGITUDE, lastLocation.latitude.toString())
-                setResult(Activity.RESULT_OK, replyIntent)
+                post()
+                finish()
             }
-            post()
-            finish()
         }
+
+        spinner = findViewById(R.id.spinner)
+        val request =  ServiceBuilder.buildService(EndPoints::class.java)
+        val call = request.getTipos()
+        call.enqueue(object : Callback<List<Tipo>> {
+            override fun onResponse(call: Call<List<Tipo>>, response: Response<List<Tipo>>) {
+                if(response.isSuccessful){
+                    tipo = response.body()!!
+                    Log.d("TIPO", tipo.toString())
+                    for (tipo in tipo) {
+                        var nome = tipo.nome_tipo
+                        /*ArrayAdapter.createFromResource(this@AddOcorrencia, nome,android.R.layout.simple_spinner_item).also { adapter ->
+                                // Specify the layout to use when the list of choices appears
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                                // Apply the adapter to the spinner
+                                spinner.adapter = adapter
+                            }*/
+                        Log.d("NOME", nome)
+                        var name = ArrayList<String>()
+                        name.add(nome)
+                        Log.d("NAME", name.toString())
+                        val arrayAdapter = ArrayAdapter(this@AddOcorrencia, android.R.layout.simple_spinner_dropdown_item, name)
+                        Log.d("ARRAY", arrayOf(nome).contentToString())
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinner.setAdapter(arrayAdapter)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Tipo>>, t: Throwable) {
+                Toast.makeText(this@AddOcorrencia, "${t.message}", Toast.LENGTH_SHORT).show()
+            }
+
+
+        })
+
+        //spinner.onItemSelectedListener = this
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -103,20 +136,9 @@ class AddOcorrencia : AppCompatActivity() {
         if (resultCode == RESULT_OK && requestCode == pickImage) {
             imageUri = data?.data
             imageView.setImageURI(imageUri)
+
+            Log.d("IMAGEM", "image " + imageUri.toString() )
         }
-
-        /*if (requestCode == newOcorrActivityRequestCode && resultCode == Activity.RESULT_OK){
-            val otitulo = data?.getStringExtra(EXTRA_REPLY_TITLE)
-            val odescr = data?.getStringExtra(EXTRA_REPLY_DESCRIPTION)
-            val olat = data?.getStringExtra(EXTRA_REPLY_LATITUDE)
-            val olong = data?.getStringExtra(EXTRA_REPLY_LONGITUDE)
-
-            if(otitulo != null && odescr != null) {
-                val ocorrencia = Ocorrencia(titulo = otitulo, descricao = odescr, latitude = olat, longitude = olong)
-
-            }
-        }*/
-
     }
 
     private fun createLocationRequest() {
@@ -153,7 +175,7 @@ class AddOcorrencia : AppCompatActivity() {
     fun post(){
         val request = ServiceBuilder.buildService(EndPoints::class.java)
         val call = request.addOcorrencias(title.text.toString(), description.text.toString(),
-                lastLocation.latitude.toString(), lastLocation.longitude.toString(), "teste android",
+                lastLocation.latitude.toString(), lastLocation.longitude.toString(), imageUri.toString(),
                 1, 1)
 
         call.enqueue(object : Callback<OutputPost>{
@@ -169,6 +191,15 @@ class AddOcorrencia : AppCompatActivity() {
                 Toast.makeText(applicationContext, "${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+        // An item was selected. You can retrieve the selected item using
+        parent.getItemAtPosition(pos)
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>) {
+        // Another interface callback
     }
 
     companion object {
