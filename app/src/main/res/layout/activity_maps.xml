@@ -17,14 +17,13 @@
         android:id="@+id/txtcoordenadas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginRight="10dp"
         android:background="#611069"
+        android:padding="5dp"
+        android:text="Coordinates: "
         android:textColor="#ffffff"
-        android:text="Coordinates: "/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"

@@ -89,21 +89,15 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     tipo = response.body()!!
                     Log.d("TIPO", tipo.toString())
                     for (tipo in tipo) {
-                        var nome = tipo.nome_tipo
-                        /*ArrayAdapter.createFromResource(this@AddOcorrencia, nome,android.R.layout.simple_spinner_item).also { adapter ->
-                                // Specify the layout to use when the list of choices appears
-                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                                // Apply the adapter to the spinner
-                                spinner.adapter = adapter
-                            }*/
-                        Log.d("NOME", nome)
-                        var name = ArrayList<String>()
-                        name.add(nome)
-                        Log.d("NAME", name.toString())
-                        val arrayAdapter = ArrayAdapter(this@AddOcorrencia, android.R.layout.simple_spinner_dropdown_item, name)
-                        Log.d("ARRAY", arrayOf(nome).contentToString())
+                        val nome = arrayOf(tipo.nome_tipo)
+                        Log.d("NOMEY", nome.contentDeepToString())
+
+                        //val name = listOf(nome)
+                        //Log.d("NOME", name.toString())
+
+                        /*val arrayAdapter = ArrayAdapter(this@AddOcorrencia, android.R.layout.simple_spinner_dropdown_item, nome)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        spinner.setAdapter(arrayAdapter)
+                        spinner.setAdapter(arrayAdapter)*/
                     }
                 }
             }
