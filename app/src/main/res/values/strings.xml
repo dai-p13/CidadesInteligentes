@@ -30,4 +30,9 @@
     <string name="error">Incorrect Username/ Password</string>
     <string name="blank">Blank Username/ Password</string>
     <string name="selectImage">Choose Image</string>
+    <string-array name="tipo">
+        <item>Acidente</item>
+        <item>Obras</item>
+        <item>Saneamento</item>
+    </string-array>
 </resources>

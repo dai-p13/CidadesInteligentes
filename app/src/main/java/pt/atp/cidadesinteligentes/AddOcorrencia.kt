@@ -6,12 +6,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.get
@@ -81,35 +83,14 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
 
         spinner = findViewById(R.id.spinner)
-        val request =  ServiceBuilder.buildService(EndPoints::class.java)
-        val call = request.getTipos()
-        call.enqueue(object : Callback<List<Tipo>> {
-            override fun onResponse(call: Call<List<Tipo>>, response: Response<List<Tipo>>) {
-                if(response.isSuccessful){
-                    tipo = response.body()!!
-                    Log.d("TIPO", tipo.toString())
-                    for (tipo in tipo) {
-                        val nome = arrayOf(tipo.nome_tipo)
-                        Log.d("NOMEY", nome.contentDeepToString())
+        ArrayAdapter.createFromResource(this@AddOcorrencia, R.array.tipo,android.R.layout.simple_spinner_item).also { adapter ->
+                               // Specify the layout to use when the list of choices appears
+                               adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                               // Apply the adapter to the spinner
+                               spinner.adapter = adapter
+                           }
 
-                        //val name = listOf(nome)
-                        //Log.d("NOME", name.toString())
-
-                        /*val arrayAdapter = ArrayAdapter(this@AddOcorrencia, android.R.layout.simple_spinner_dropdown_item, nome)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        spinner.setAdapter(arrayAdapter)*/
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<List<Tipo>>, t: Throwable) {
-                Toast.makeText(this@AddOcorrencia, "${t.message}", Toast.LENGTH_SHORT).show()
-            }
-
-
-        })
-
-        //spinner.onItemSelectedListener = this
+        spinner.onItemSelectedListener = this
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -170,7 +151,7 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val request = ServiceBuilder.buildService(EndPoints::class.java)
         val call = request.addOcorrencias(title.text.toString(), description.text.toString(),
                 lastLocation.latitude.toString(), lastLocation.longitude.toString(), imageUri.toString(),
-                1, 1)
+                1, spinner.selectedItemPosition + 1)
 
         call.enqueue(object : Callback<OutputPost>{
             override fun onResponse(call: Call<OutputPost>, response: Response<OutputPost>) {
@@ -190,17 +171,12 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         // An item was selected. You can retrieve the selected item using
         parent.getItemAtPosition(pos)
+        Log.d("SPINNER", pos.toString())
+
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {
         // Another interface callback
-    }
-
-    companion object {
-        const val EXTRA_REPLY_TITLE = "com.example.android.title"
-        const val EXTRA_REPLY_DESCRIPTION = "com.example.android.description"
-        const val EXTRA_REPLY_LATITUDE = "LAT"
-        const val EXTRA_REPLY_LONGITUDE = "LONG"
     }
 
 }
