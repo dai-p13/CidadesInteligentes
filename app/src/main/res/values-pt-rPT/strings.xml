@@ -30,4 +30,5 @@
     <string name="remember">Lembrar nome de utilizador</string>
     <string name="error">Username/ Password Incorretos</string>
     <string name="blank">Username/ Password Vazios</string>
+    <string name="share_preferencees_file">Ficheiro sharedpreferences</string>
 </resources>
