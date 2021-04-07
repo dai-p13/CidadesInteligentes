@@ -35,4 +35,7 @@
         <item>Obras</item>
         <item>Saneamento</item>
     </string-array>
+    <string name="acidents">Accidents</string>
+    <string name="construction">Construction</string>
+    <string name="sanitation">Sanitation</string>
 </resources>

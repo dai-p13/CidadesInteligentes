@@ -59,7 +59,7 @@ class ListaOcorrencias : AppCompatActivity() {
                 true
 
             }
-            R.id.listarMinhas -> {
+            R.id.listarAcidentes -> {
 
                 /*val request = ServiceBuilder.buildService(EndPoints::class.java)
                 val call = request.getOcorrencias() // estaticamente o valor 2. deverá depois passar a ser dinamico

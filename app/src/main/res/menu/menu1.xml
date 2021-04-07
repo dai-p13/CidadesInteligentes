@@ -6,8 +6,19 @@
         android:title="@string/all">
     </item>
     <item
+        android:id="@+id/listarAcidentes"
+        android:title="@string/acidents">
+    </item>
+    <item
+        android:id="@+id/listarObras"
+        android:title="@string/construction">
+    </item>
+    <item
+        android:id="@+id/listarSaneamento"
+        android:title="@string/sanitation">
+    </item>
+    <item
         android:id="@+id/listarMinhas"
         android:title="@string/mine">
     </item>
-
 </menu>

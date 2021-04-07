@@ -16,6 +16,15 @@ interface EndPoints{
     @GET("/myslim/api/tipo")
     fun getTipos(): Call<List<Tipo>>
 
+    @GET("/myslim/api/ocorrencias/tipoAcid")
+    fun getAcidentes(): Call<List<Ocorrencia>>
+
+    @GET("/myslim/api/ocorrencias/tipoObras")
+    fun getObras(): Call<List<Ocorrencia>>
+
+    @GET("/myslim/api/ocorrencias/tipoSane")
+    fun getSaneamento(): Call<List<Ocorrencia>>
+
     @FormUrlEncoded
     @POST("/myslim/api/ocorrencias")
     fun addOcorrencias(@Field("titulo") first: String?, @Field("descricao") second: String?,

@@ -32,7 +32,6 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private lateinit var imageView: ImageView
     private lateinit var title: EditText
     private lateinit var description: EditText
-    private lateinit var tipo: List<Tipo>
 
     private lateinit var button: Button
     private lateinit var buttonBack: Button
@@ -135,22 +134,10 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null /* Looper */)
     }
 
-    override fun onPause() {
-        super.onPause()
-        fusedLocationClient.removeLocationUpdates(locationCallback)
-        Log.d("**** DIOGO", "onPause - removeLocationUpdates")
-    }
-
-    public override fun onResume() {
-        super.onResume()
-        startLocationUpdates()
-        Log.d("**** DIOGO", "onResume - startLocationUpdates")
-    }
-
     fun post(){
         val request = ServiceBuilder.buildService(EndPoints::class.java)
         val call = request.addOcorrencias(title.text.toString(), description.text.toString(),
-                lastLocation.latitude.toString(), lastLocation.longitude.toString(), imageUri.toString(),
+                lastLocation.latitude.toString(), lastLocation.longitude.toString(), imageUri?.let { getRealPathFromURI(it) },
                 1, spinner.selectedItemPosition + 1)
 
         call.enqueue(object : Callback<OutputPost>{
@@ -168,6 +155,15 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         })
     }
 
+    private fun getRealPathFromURI(contentUri: Uri): String? {
+        val proj = arrayOf<String>(MediaStore.Images.Media.DATA)
+        val cursor = managedQuery(contentUri, proj, null, null, null)
+                ?: return contentUri.getPath()
+        val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        cursor.moveToFirst()
+        return cursor.getString(column_index)
+    }
+
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         // An item was selected. You can retrieve the selected item using
         parent.getItemAtPosition(pos)
@@ -179,4 +175,15 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         // Another interface callback
     }
 
+    override fun onPause() {
+        super.onPause()
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+        Log.d("**** DIOGO", "onPause - removeLocationUpdates")
+    }
+
+    public override fun onResume() {
+        super.onResume()
+        startLocationUpdates()
+        Log.d("**** DIOGO", "onResume - startLocationUpdates")
+    }
 }

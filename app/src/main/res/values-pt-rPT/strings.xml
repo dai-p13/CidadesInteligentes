@@ -31,4 +31,7 @@
     <string name="error">Username/ Password Incorretos</string>
     <string name="blank">Username/ Password Vazios</string>
     <string name="selectImage">Escolha a imagem</string>
+    <string name="acidents">Acidentes</string>
+    <string name="construction">Obras</string>
+    <string name="sanitation">Saneamento</string>
 </resources>
