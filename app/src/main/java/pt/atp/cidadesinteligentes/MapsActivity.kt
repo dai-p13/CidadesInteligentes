@@ -1,11 +1,13 @@
 package pt.atp.cidadesinteligentes
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.location.Location
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
@@ -29,6 +31,7 @@ import pt.atp.cidadesinteligentes.api.Tipo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.text.Charsets.UTF_8
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
@@ -64,13 +67,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val request =  ServiceBuilder.buildService(EndPoints::class.java)
         val call = request.getOcorrencias()
         var position: LatLng
+        var foto: String
         call.enqueue(object : Callback<List<Ocorrencia>> {
             override fun onResponse(call: Call<List<Ocorrencia>>, response: Response<List<Ocorrencia>>) {
                 if(response.isSuccessful){
                     ocorrencia = response.body()!!
                     for (ocorr in ocorrencia) {
                         position = LatLng(ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
+                        foto = ocorr.foto
+
+                        val image = StringToBitMap(foto)
+                        //Log.d("FOTOBYTE", imageBytes.toString())
+                        Log.d("FOTOBIT", image.toString())
                         mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao))
+
                     }
                 }
             }
@@ -81,6 +91,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         })
 
         locationCallback = object : LocationCallback() {
+            @SuppressLint("SetTextI18n")
             override fun onLocationResult(p0: LocationResult) {
                 super.onLocationResult(p0)
                 lastLocation = p0.lastLocation
@@ -93,12 +104,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 // reverse geocoding
                 /*val address = getAddress(lastLocation.latitude, lastLocation.longitude)
-                findViewById<TextView>(com.google.android.gms.location.R.id.txtmorada).setText("Morada: " + address)
+                findViewById<TextView>(R.id.txtmorada).setText("Morada: " + address)*/
 
                 // distancia
-                findViewById<TextView>(com.google.android.gms.location.R.id.txtdistancia).setText("Distância: " + calculateDistance(
-                    lastLocation.latitude, lastLocation.longitude,
-                    continenteLat, continenteLong).toString())*/
+                /*findViewById<TextView>(R.id.textView3).setText("Distância: " + calculateDistance(lastLocation.latitude, lastLocation.longitude,
+                        position.latitude, position.longitude).toString())*/
 
                 Log.d("**** DIOGO", "new location received - " + loc.latitude + " -" + loc.longitude)
             }
@@ -126,6 +136,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))*/
 
         //setUpMap()
+    }
+
+    fun calculateDistance(lat1: Double, lng1: Double, lat2: Double, lng2: Double): Float {
+        val results = FloatArray(1)
+        Location.distanceBetween(lat1, lng1, lat2, lng2, results)
+        // distance in meter
+        return results[0]
+    }
+
+    fun StringToBitMap(encodedString: String): Bitmap? {
+        val encodeByte: ByteArray = encodedString.toByteArray(UTF_8)
+        return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
     }
 
     fun setUpMap(){
@@ -197,6 +219,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
             }
             R.id.listarAcidentes -> {
+                mMap.clear()
+
                 val request = ServiceBuilder.buildService(EndPoints::class.java)
                 val call = request.getAcidentes()
                 var position: LatLng
@@ -218,6 +242,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 true
             }
             R.id.listarObras -> {
+                mMap.clear()
+
                 val request = ServiceBuilder.buildService(EndPoints::class.java)
                 val call = request.getObras()
                 var position: LatLng
@@ -239,6 +265,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 true
             }
             R.id.listarSaneamento -> {
+                mMap.clear()
+
                 val request = ServiceBuilder.buildService(EndPoints::class.java)
                 val call = request.getSaneamento()
                 var position: LatLng
@@ -260,6 +288,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 true
             }
             R.id.listarMinhas ->{
+                mMap.clear()
                 /*val request = ServiceBuilder.buildService(EndPoints::class.java)
                 val call = request.getSaneamento()
                 var position: LatLng

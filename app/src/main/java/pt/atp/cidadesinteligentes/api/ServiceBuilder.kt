@@ -16,4 +16,6 @@ object ServiceBuilder {
     fun<T> buildService(service: Class<T>): T{
         return retrofit.create(service)
     }
+
+    //        .baseUrl("https://cidintdiogo.000webhostapp.com/").baseUrl("https://192.168.1.72//:3306/")
 }
