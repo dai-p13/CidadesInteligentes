@@ -3,11 +3,9 @@ package pt.atp.cidadesinteligentes
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.location.Location
 import android.os.Bundle
-import android.util.Base64
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
@@ -21,6 +19,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,7 +30,6 @@ import pt.atp.cidadesinteligentes.api.Tipo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.text.Charsets.UTF_8
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
@@ -75,11 +73,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     for (ocorr in ocorrencia) {
                         position = LatLng(ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
                         foto = ocorr.foto
-
-                        val image = StringToBitMap(foto)
-                        //Log.d("FOTOBYTE", imageBytes.toString())
-                        Log.d("FOTOBIT", image.toString())
-                        mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao))
+                        val image = MediaStore.Images.Media.getContentUri(foto)
+                        Log.d("LOL", image.toString())
+                        val bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), image)
+                        mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao).icon(BitmapDescriptorFactory.fromBitmap(bitmap)))
 
                     }
                 }
@@ -143,11 +140,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         Location.distanceBetween(lat1, lng1, lat2, lng2, results)
         // distance in meter
         return results[0]
-    }
-
-    fun StringToBitMap(encodedString: String): Bitmap? {
-        val encodeByte: ByteArray = encodedString.toByteArray(UTF_8)
-        return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
     }
 
     fun setUpMap(){
@@ -253,7 +245,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             ocorrencia = response.body()!!
                             for (ocorr in ocorrencia) {
                                 position = LatLng(ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
-                                mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao))
+                                mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao + "Distancia: " + calculateDistance(
+                                        lastLocation.latitude, lastLocation.longitude, ocorr.latitude.toDouble(), ocorr.longitude.toDouble()).toString()))
                             }
                         }
                     }
