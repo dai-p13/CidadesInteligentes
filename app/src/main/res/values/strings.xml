@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Inteligents Cities</string>
     <string name="share_preferencees_file">Shared Preferences File</string>
+    <string name="id_shrpref">id</string>
+    <string name="id">ID</string>
     <string name="reporte_problema">Report Problem</string>
     <string name="notes">Notes</string>
     <string name="title">Title</string>

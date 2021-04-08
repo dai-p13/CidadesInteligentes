@@ -31,4 +31,6 @@
     <string name="error">Username/ Password Incorretos</string>
     <string name="blank">Username/ Password Vazios</string>
     <string name="share_preferencees_file">Ficheiro sharedpreferences</string>
+    <string name="id_shrpref">id shared preferences</string>
+    <string name="id">ID</string>
 </resources>

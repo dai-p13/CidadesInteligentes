@@ -45,17 +45,11 @@ class MainActivity : AppCompatActivity() {
 
         user = findViewById(R.id.username)
         pwd = findViewById(R.id.password)
-        sharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
 
-        val nomeUser = sharedPreferences.getString(getString(R.string.username), "")
-        val pwd = sharedPreferences.getString(getString(R.string.password), "")
-        //
-        if(nomeUser.toString().isNotEmpty() && pwd.toString().isNotEmpty()) {
-            val intent = Intent(this@MainActivity, MapsActivity::class.java)
-            startActivity(intent)
-        } else {
-            realizarLogin()
-        }
+        sharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
+        val id = sharedPreferences.getInt(R.string.id_shrpref.toString(), 0)
+
+
     }
 
     fun realizarLogin() {
@@ -70,12 +64,10 @@ class MainActivity : AppCompatActivity() {
                     if(response.isSuccessful){
                         util = response.body()!!
                         for(utili in util){
-                            val usn = utili.username
-                            val psw = utili.password
+                            val id = utili.id
                             val shrePref: SharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
                             with(shrePref.edit()) {
-                                putString(getString(R.id.username), usn)
-                                putString(getString(R.id.password), psw)
+                                putInt(R.string.id.toString(), id)
                                 commit()
                             }
                             Log.d("pref", shrePref.toString())
