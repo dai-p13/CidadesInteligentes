@@ -1,6 +1,8 @@
 package pt.atp.cidadesinteligentes
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +33,7 @@ import retrofit2.Response
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var ocorrencia: List<Ocorrencia>
+    private lateinit var sharedPreferences: SharedPreferences
 
     // add to implement last known location
     private lateinit var lastLocation: Location
@@ -205,6 +208,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                 })
                 */
+                true
+            }
+            R.id.logout -> {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                sharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
+                with(sharedPreferences.edit()) {
+                    putInt(R.string.id.toString(), 0)
+                    commit()
+                }
+                Log.d("LOGOR", sharedPreferences.toString())
                 true
             }
 

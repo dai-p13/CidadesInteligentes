@@ -22,8 +22,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var user: EditText
     private lateinit var pwd: EditText
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var util: List<Users>
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +38,6 @@ class MainActivity : AppCompatActivity() {
             //val intent = Intent(this@MainActivity, MapsActivity::class.java)
             //startActivity(intent)
             realizarLogin()
-            finish()
         }
 
         user = findViewById(R.id.username)
@@ -48,6 +45,11 @@ class MainActivity : AppCompatActivity() {
 
         sharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
         val id = sharedPreferences.getInt(R.string.id_shrpref.toString(), 0)
+
+        if(id != 0){
+            val intent = Intent(this@MainActivity, MapsActivity::class.java)
+            startActivity(intent)
+        }
 
 
     }
@@ -57,31 +59,33 @@ class MainActivity : AppCompatActivity() {
         val password = pwd.text.toString()
         if(username.isNotEmpty() && password.isNotEmpty()){
             val request = ServiceBuilder.buildService(EndPoints::class.java)
-            val call = request.getUsers()
-            call.enqueue(object : Callback<List<Users>> {
+            val call = request.login(username, password)
+            call.enqueue(object : Callback<Users> {
                 @SuppressLint("ResourceType")
-                override fun onResponse(call: Call<List<Users>>, response: Response<List<Users>>) {
+                override fun onResponse(call: Call<Users>, response: Response<Users>) {
                     if(response.isSuccessful){
-                        util = response.body()!!
-                        for(utili in util){
-                            val id = utili.id
-                            val shrePref: SharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
-                            with(shrePref.edit()) {
-                                putInt(R.string.id.toString(), id)
+                        var util: Users = response.body()!!
+                        Log.d("KOL", util.id.toString())
+                        val sharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
+                            with(sharedPreferences.edit()) {
+                                putInt(R.string.id_shrpref.toString(), util.id)
                                 commit()
-                            }
-                            Log.d("pref", shrePref.toString())
+
                         }
+                        Log.d("KOA", sharedPreferences.toString())
                         val intent = Intent(this@MainActivity, MapsActivity::class.java)
                         startActivity(intent)
+                        val jo = sharedPreferences.getInt(R.string.id_shrpref.toString(), 0)
+                        Log.d("DIMITRI", jo.toString())
                     }else {
                         Toast.makeText(this@MainActivity, getString(R.string.error), Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@MainActivity, MainActivity::class.java)
                         startActivity(intent)
+                        finish()
                     }
                 }
 
-                override fun onFailure(call: Call<List<Users>>, t: Throwable) {
+                override fun onFailure(call: Call<Users>, t: Throwable) {
                     Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
                 }
             })

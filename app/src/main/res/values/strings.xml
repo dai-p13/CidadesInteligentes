@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Inteligents Cities</string>
-    <string name="share_preferencees_file">Shared Preferences File</string>
-    <string name="id_shrpref">id</string>
+    <string name="share_preferencees_file" translatable="false">Shared Preferences File</string>
+    <string name="id_shrpref" translatable="false">id</string>
     <string name="id">ID</string>
     <string name="reporte_problema">Report Problem</string>
     <string name="notes">Notes</string>
@@ -32,4 +32,10 @@
     <string name="remember">Remember Username</string>
     <string name="error">Incorrect Username/ Password</string>
     <string name="blank">Blank Username/ Password</string>
+    <string name="usernameP" translatable="false">usernameP</string>
+    <string name="passwordP" translatable="false">passwordP</string>
+    <string name="failedLogin">Invalid Credentials</string>
+    <string name="noUser">Blank Username</string>
+    <string name="noPass">Blank Password</string>
+    <string name="logout">Logout</string>
 </resources>
