@@ -1,10 +1,12 @@
 package pt.atp.cidadesinteligentes
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +25,12 @@ class ListaOcorrencias : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_ocorrencias)
+
+        val buttonCancel = findViewById<Button>(R.id.OcorrBack)
+        buttonCancel.setOnClickListener {
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
+        }
 
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_ocorr)
         val request = ServiceBuilder.buildService(EndPoints::class.java)

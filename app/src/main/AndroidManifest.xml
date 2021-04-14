@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CidadesInteligentes">
-        <activity android:name=".ListaOcorrencias"></activity>
+        <activity android:name=".EditOcorrencia"></activity>
+        <activity android:name=".ListaOcorrencias" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
