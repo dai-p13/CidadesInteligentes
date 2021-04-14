@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         //val nomeUser = sharedPreferences.getString(getString(R.string.username), "")
         /*val pwd = sharedPreferences.getString(getString(R.string.password), "")
-
+        //
         if(nomeUser.toString().isNotEmpty() && pwd.toString().isNotEmpty()) {
             TODO("Iniciar a atividade com login iniciado")
         }*/
