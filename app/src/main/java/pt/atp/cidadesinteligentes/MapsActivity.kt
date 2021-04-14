@@ -210,17 +210,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 */
                 true
             }
+            R.id.Notas -> {
+                val intent = Intent(this, Notas::class.java)
+                startActivity(intent)
+                true
+            }
             R.id.logout -> {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 sharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
                 with(sharedPreferences.edit()) {
-                    putInt(R.string.id.toString(), 0)
+                    putInt(R.string.id_shrpref.toString(), 0)
                     commit()
                 }
                 Log.d("LOGOR", sharedPreferences.toString())
                 true
             }
+
 
             else -> super.onOptionsItemSelected(item)
         }
