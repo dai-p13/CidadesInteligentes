@@ -19,8 +19,8 @@ class AddNota : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_nota)
 
-        titleText = findViewById(R.id.title)
-        descriptionText = findViewById(R.id.description)
+        titleText = findViewById(R.id.ocotitle)
+        descriptionText = findViewById(R.id.ocodescription)
 
         val button = findViewById<Button>(R.id.save)
         button.setOnClickListener {

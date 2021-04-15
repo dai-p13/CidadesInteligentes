@@ -20,6 +20,7 @@ import retrofit2.Response
 
 class EditOcorrencia : AppCompatActivity() {
     private lateinit var desc: EditText
+    private lateinit var tit: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +28,9 @@ class EditOcorrencia : AppCompatActivity() {
 
     }
 
-    fun GuardarEdit2(view: View) {
-        desc = findViewById(R.id.description)
+    fun guardarEdit2(view: View) {
+        desc = findViewById(R.id.ocodescription)
+        tit = findViewById(R.id.ocotitle)
 
 
         val message10 = intent.getIntExtra(IDOCO,0)
@@ -36,7 +38,7 @@ class EditOcorrencia : AppCompatActivity() {
         Log.d("NAOOOOO", message10.toString())
 
         val replyIntent = Intent()
-        if (TextUtils.isEmpty(desc.text.toString()))  {
+        if (TextUtils.isEmpty(desc.text.toString()) && TextUtils.isEmpty(tit.text.toString()))  {
             setResult(Activity.RESULT_CANCELED, replyIntent)
             //Toast.makeText(this,R.string.sav, Toast.LENGTH_SHORT).show()
 
@@ -44,7 +46,7 @@ class EditOcorrencia : AppCompatActivity() {
             Log.d("SIMMMM1", desc.text.toString())
 
             val request = ServiceBuilder.buildService(EndPoints::class.java)
-            /*val call = request
+            val call = request.editaOcorrencia(tit.text.toString(), desc.text.toString(), message10)
 
             call.enqueue(object : Callback<Ocorrencia> {
                 override fun onResponse(call: Call<Ocorrencia>, response: Response<Ocorrencia>) {
@@ -66,7 +68,7 @@ class EditOcorrencia : AppCompatActivity() {
                         R.string.save,
                         Toast.LENGTH_LONG).show()
                 }
-            })*/
+            })
 
 
         }
