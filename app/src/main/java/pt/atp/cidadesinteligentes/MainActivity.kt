@@ -64,19 +64,21 @@ class MainActivity : AppCompatActivity() {
                 @SuppressLint("ResourceType")
                 override fun onResponse(call: Call<Users>, response: Response<Users>) {
                     if(response.isSuccessful){
-                        var util: Users = response.body()!!
-                        Log.d("KOL", util.id.toString())
-                        val sharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
+                        if(response.body()!!.id != 0){
+                            val sharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
                             with(sharedPreferences.edit()) {
-                                putInt(R.string.id_shrpref.toString(), util.id)
+                                putInt(R.string.id_shrpref.toString(), response.body()!!.id)
                                 commit()
 
+                            }
+                            Log.d("KOA", sharedPreferences.toString())
+                            val intent = Intent(this@MainActivity, MapsActivity::class.java)
+                            startActivity(intent)
+                            val jo = sharedPreferences.getInt(R.string.id_shrpref.toString(), 0)
+                            Log.d("DIMITRI", jo.toString())
+                        }else {
+                            Toast.makeText(this@MainActivity, getString(R.string.error), Toast.LENGTH_SHORT).show()
                         }
-                        Log.d("KOA", sharedPreferences.toString())
-                        val intent = Intent(this@MainActivity, MapsActivity::class.java)
-                        startActivity(intent)
-                        //val jo = sharedPreferences.getInt(R.string.id_shrpref.toString(), 0)
-                        //Log.d("DIMITRI", jo.toString())
                     }else {
                         Toast.makeText(this@MainActivity, getString(R.string.error), Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@MainActivity, MainActivity::class.java)

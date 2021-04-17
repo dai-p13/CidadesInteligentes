@@ -21,6 +21,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import pt.atp.cidadesinteligentes.api.EndPoints
@@ -58,13 +59,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val request =  ServiceBuilder.buildService(EndPoints::class.java)
         val call = request.getOcorrencias()
         var position: LatLng
+        sharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
+        val id = sharedPreferences.getInt(R.string.id_shrpref.toString(), 0)
         call.enqueue(object : Callback<List<Ocorrencia>> {
             override fun onResponse(call: Call<List<Ocorrencia>>, response: Response<List<Ocorrencia>>) {
                 if(response.isSuccessful){
                     ocorrencia = response.body()!!
                     for (ocorr in ocorrencia) {
-                        position = LatLng(ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
-                        mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao))
+                        if(id == ocorr.users_id){
+                            position = LatLng(ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
+                            mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
+                        } else {
+                            position = LatLng(ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
+                            mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
+                        }
                     }
                 }
             }
