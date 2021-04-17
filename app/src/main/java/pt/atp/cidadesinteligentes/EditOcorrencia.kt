@@ -10,7 +10,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import pt.atp.cidadesinteligentes.adapter.DESC
 import pt.atp.cidadesinteligentes.adapter.IDOCO
+import pt.atp.cidadesinteligentes.adapter.OCORR
+import pt.atp.cidadesinteligentes.adapter.TITULO
 import pt.atp.cidadesinteligentes.api.EndPoints
 import pt.atp.cidadesinteligentes.api.Ocorrencia
 import pt.atp.cidadesinteligentes.api.ServiceBuilder
@@ -26,6 +29,12 @@ class EditOcorrencia : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_ocorrencia)
 
+        val desc_edit = intent.getStringExtra(DESC)
+        findViewById<EditText>(R.id.ocodescription).setText(desc_edit)
+
+        val tit_edi = intent.getStringExtra(OCORR)
+        findViewById<EditText>(R.id.ocotitle).setText(tit_edi)
+
     }
 
     fun guardarEdit2(view: View) {
@@ -33,9 +42,9 @@ class EditOcorrencia : AppCompatActivity() {
         tit = findViewById(R.id.ocotitle)
 
 
-        val message10 = intent.getIntExtra(IDOCO,0)
+        val id_oco_edit = intent.getIntExtra(IDOCO,0)
 
-        Log.d("NAOOOOO", message10.toString())
+        Log.d("NAOOOOO", id_oco_edit.toString())
 
         val replyIntent = Intent()
         if (TextUtils.isEmpty(desc.text.toString()) && TextUtils.isEmpty(tit.text.toString()))  {
@@ -46,7 +55,7 @@ class EditOcorrencia : AppCompatActivity() {
             Log.d("SIMMMM1", desc.text.toString())
 
             val request = ServiceBuilder.buildService(EndPoints::class.java)
-            val call = request.editaOcorrencia(tit.text.toString(), desc.text.toString(), message10)
+            val call = request.editaOcorrencia(tit.text.toString(), desc.text.toString(), id_oco_edit)
 
             call.enqueue(object : Callback<Ocorrencia> {
                 override fun onResponse(call: Call<Ocorrencia>, response: Response<Ocorrencia>) {
