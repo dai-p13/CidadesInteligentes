@@ -35,28 +35,34 @@ class EditOcorrencia : AppCompatActivity() {
         val tit_edi = intent.getStringExtra(OCORR)
         findViewById<EditText>(R.id.ocotitle).setText(tit_edi)
 
+        val save_Edit = findViewById<Button>(R.id.save)
+        save_Edit.setOnClickListener {
+                guardarEdit2()
+                finish()
+            
+        }
+
     }
 
-    fun guardarEdit2(view: View) {
-        desc = findViewById(R.id.ocodescription)
+    fun guardarEdit2() {
         tit = findViewById(R.id.ocotitle)
+        desc = findViewById(R.id.ocodescription)
 
-
-        val id_oco_edit = intent.getIntExtra(IDOCO,0)
+        var id_oco_edit = intent.getIntExtra(IDOCO, 0)
 
         Log.d("NAOOOOO", id_oco_edit.toString())
 
         val replyIntent = Intent()
         if (TextUtils.isEmpty(desc.text.toString()) && TextUtils.isEmpty(tit.text.toString()))  {
             setResult(Activity.RESULT_CANCELED, replyIntent)
-            //Toast.makeText(this,R.string.sav, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,R.string.warn, Toast.LENGTH_SHORT).show()
 
         } else {
             Log.d("SIMMMM1", desc.text.toString())
 
             val request = ServiceBuilder.buildService(EndPoints::class.java)
             val call = request.editaOcorrencia(tit.text.toString(), desc.text.toString(), id_oco_edit)
-
+            Log.d("MOAO", call.toString())
             call.enqueue(object : Callback<Ocorrencia> {
                 override fun onResponse(call: Call<Ocorrencia>, response: Response<Ocorrencia>) {
                     if (response.isSuccessful){
@@ -71,10 +77,10 @@ class EditOcorrencia : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<Ocorrencia>, t: Throwable) {
-                    Log.d("SIMMMM2", "n")
+                    Log.d("NALOL", "n")
                     Toast.makeText(
                         applicationContext,
-                        R.string.save,
+                        R.string.error,
                         Toast.LENGTH_LONG).show()
                 }
             })

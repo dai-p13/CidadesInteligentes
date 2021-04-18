@@ -29,4 +29,6 @@
     <string name="remember">Remember Username</string>
     <string name="error">Incorrect Username/ Password</string>
     <string name="blank">Blank Username/ Password</string>
+    <string name="errorOco">Error! Report not updated.</string>
+    <string name="warn">Title / Description blank</string>
 </resources>

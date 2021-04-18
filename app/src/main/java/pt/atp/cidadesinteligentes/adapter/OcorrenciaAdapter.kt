@@ -14,7 +14,7 @@ import pt.atp.cidadesinteligentes.api.Ocorrencia
 
 const val OCORR="TITULO"
 const val DESC="DESCRICAO"
-const val IDOCO="ID"
+const val IDOCO= "ID"
 
 class OcorrenciaAdapter(val ocorrencias: List<Ocorrencia>): RecyclerView.Adapter<OcorenciasViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OcorenciasViewHolder {
@@ -45,10 +45,12 @@ class OcorenciasViewHolder(itemView : View): RecyclerView.ViewHolder(itemView){
             val context =  titulo.context
             val tit = titulo.text.toString()
             val desc = descricao.text.toString()
+            val id = ocorrencia.id
 
             val intent = Intent(context, EditOcorrencia::class.java).apply {
                 putExtra(OCORR, tit)
                 putExtra(DESC, desc)
+                putExtra(IDOCO, id)
             }
             context.startActivity(intent)
         }
