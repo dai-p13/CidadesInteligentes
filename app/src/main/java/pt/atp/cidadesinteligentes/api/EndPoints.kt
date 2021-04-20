@@ -10,6 +10,9 @@ interface EndPoints{
     @GET("/myslim/api/ocorrencias")
     fun getOcorrencias(): Call<List<Ocorrencia>>
 
+    @GET("/myslim/api/ocorrencias/users")
+    fun getOcorrUser(@Field("id") id: Int?): Call<List<Ocorrencia>>
+
     @GET("/myslim/api/users")
     fun getUsers(): Call<List<Users>>
 

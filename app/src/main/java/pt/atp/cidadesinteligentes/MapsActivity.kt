@@ -199,23 +199,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
             R.id.listarMinhas -> {
 
-                /*val request = ServiceBuilder.buildService(EndPoints::class.java)
-                val call = request.getOcorrencias() // estaticamente o valor 2. deverá depois passar a ser dinamico
+                val request = ServiceBuilder.buildService(EndPoints::class.java)
+                sharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
+                val id = sharedPreferences.getInt(R.string.id_shrpref.toString(), 0)
+                val call = request.getOcorrUser(id)
 
-                call.enqueue(object : Callback<Ocorrencia>{
-                    override fun onResponse(call: Call<Ocorrencia>, response: Response<Ocorrencia>) {
+                call.enqueue(object : Callback<List<Ocorrencia>>{
+                    override fun onResponse(call: Call<List<Ocorrencia>>, response: Response<List<Ocorrencia>>) {
                         if (response.isSuccessful){
+                            val intent = Intent(this@MapsActivity, ListaOcorrencias::class.java)
+                            startActivity(intent)
 
-                            val c: Ocorrencia = response.body()!!
-                            Toast.makeText(this@ListaOcorrencias, c.titulo, Toast.LENGTH_SHORT).show()
                         }
                     }
 
-                    override fun onFailure(call: Call<Ocorrencia>, t: Throwable) {
-                        Toast.makeText(this@ListaOcorrencias, "${t.message}", Toast.LENGTH_SHORT).show()
+                    override fun onFailure(call: Call<List<Ocorrencia>>, t: Throwable) {
+                        Toast.makeText(this@MapsActivity, "${t.message}", Toast.LENGTH_SHORT).show()
                     }
                 })
-                */
+
                 true
             }
             R.id.Notas -> {
