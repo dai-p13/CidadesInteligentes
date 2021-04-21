@@ -199,25 +199,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
             R.id.listarMinhas -> {
 
-                val request = ServiceBuilder.buildService(EndPoints::class.java)
-                sharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
-                val id = sharedPreferences.getInt(R.string.id_shrpref.toString(), 0)
-                val call = request.getOcorrUser(id)
-
-                call.enqueue(object : Callback<List<Ocorrencia>>{
-                    override fun onResponse(call: Call<List<Ocorrencia>>, response: Response<List<Ocorrencia>>) {
-                        if (response.isSuccessful){
-                            val intent = Intent(this@MapsActivity, ListaOcorrencias::class.java)
-                            startActivity(intent)
-
-                        }
-                    }
-
-                    override fun onFailure(call: Call<List<Ocorrencia>>, t: Throwable) {
-                        Toast.makeText(this@MapsActivity, "${t.message}", Toast.LENGTH_SHORT).show()
-                    }
-                })
-
+                val intent = Intent(this, ListaOcorrenciasUser::class.java)
+                startActivity(intent)
                 true
             }
             R.id.Notas -> {
