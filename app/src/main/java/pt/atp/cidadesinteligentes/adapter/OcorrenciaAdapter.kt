@@ -36,6 +36,7 @@ class OcorenciasViewHolder(itemView : View): RecyclerView.ViewHolder(itemView){
     private val titulo: TextView = itemView.findViewById(R.id.ocorrtit)
     private val descricao:TextView = itemView.findViewById(R.id.ocorrdesc)
     val editOco: ImageButton = itemView.findViewById(R.id.editOco)
+    val elimOco: ImageButton = itemView.findViewById(R.id.deleteOco)
 
 
     fun bind(ocorrencia: Ocorrencia) {
@@ -53,6 +54,9 @@ class OcorenciasViewHolder(itemView : View): RecyclerView.ViewHolder(itemView){
                 putExtra(IDOCO, id)
             }
             context.startActivity(intent)
+        }
+        elimOco.setOnClickListener {
+            val id = ocorrencia.id
         }
         titulo.text = ocorrencia.titulo
         descricao.text = ocorrencia.descricao
