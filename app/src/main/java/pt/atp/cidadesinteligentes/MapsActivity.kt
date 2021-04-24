@@ -72,11 +72,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     ocorrencia = response.body()!!
                     for (ocorr in ocorrencia) {
                         position = LatLng(ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
-                        foto = ocorr.foto
-                        val image = MediaStore.Images.Media.getContentUri(foto)
-                        Log.d("LOL", image.toString())
-                        val bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), image)
-                        mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao).icon(BitmapDescriptorFactory.fromBitmap(bitmap)))
+                        mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao))
 
                     }
                 }
