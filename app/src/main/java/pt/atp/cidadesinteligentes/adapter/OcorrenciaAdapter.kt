@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import pt.atp.cidadesinteligentes.DeleteOcorrencia
 import pt.atp.cidadesinteligentes.EditOcorrencia
 import pt.atp.cidadesinteligentes.R
 import pt.atp.cidadesinteligentes.api.Ocorrencia
@@ -15,6 +16,7 @@ import pt.atp.cidadesinteligentes.api.Ocorrencia
 const val OCORR="TITULO"
 const val DESC="DESCRICAO"
 const val IDOCO= "ID"
+const val IDDEL= "ID"
 
 class OcorrenciaAdapter(val ocorrencias: List<Ocorrencia>): RecyclerView.Adapter<OcorenciasViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OcorenciasViewHolder {
@@ -56,7 +58,12 @@ class OcorenciasViewHolder(itemView : View): RecyclerView.ViewHolder(itemView){
             context.startActivity(intent)
         }
         elimOco.setOnClickListener {
+            val context =  titulo.context
             val id = ocorrencia.id
+            val intent = Intent(context, DeleteOcorrencia::class.java).apply {
+                putExtra(IDDEL, id)
+            }
+            context.startActivity(intent)
         }
         titulo.text = ocorrencia.titulo
         descricao.text = ocorrencia.descricao

@@ -16,4 +16,8 @@ interface EndPoints{
     @FormUrlEncoded
     @POST("/myslim/api/editaOcorrencia")
     fun editaOcorrencia(@Field("titulo") first: String?, @Field("descricao") second: String?, @Field("id") third: Int?): Call<Ocorrencia>
+
+    @FormUrlEncoded
+    @POST("/myslim/api/eliminaOcorrencia")
+    fun eliminaOcorrencia(@Field("id") first: Int?): Call<Ocorrencia>
 }
