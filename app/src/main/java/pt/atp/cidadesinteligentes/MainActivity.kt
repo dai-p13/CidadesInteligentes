@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         if(id != 0){
             val intent = Intent(this@MainActivity, MapsActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
 
@@ -74,16 +75,17 @@ class MainActivity : AppCompatActivity() {
                             Log.d("KOA", sharedPreferences.toString())
                             val intent = Intent(this@MainActivity, MapsActivity::class.java)
                             startActivity(intent)
-                            val jo = sharedPreferences.getInt(R.string.id_shrpref.toString(), 0)
-                            Log.d("DIMITRI", jo.toString())
+                            finish()
+                            //val jo = sharedPreferences.getInt(R.string.id_shrpref.toString(), 0)
+                            //Log.d("DIMITRI", jo.toString())
                         }else {
                             Toast.makeText(this@MainActivity, getString(R.string.error), Toast.LENGTH_SHORT).show()
                         }
                     }else {
                         Toast.makeText(this@MainActivity, getString(R.string.error), Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@MainActivity, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        //val intent = Intent(this@MainActivity, MainActivity::class.java)
+                        //startActivity(intent)
+
                     }
                 }
 
