@@ -65,14 +65,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val request =  ServiceBuilder.buildService(EndPoints::class.java)
         val call = request.getOcorrencias()
         var position: LatLng
-        var foto: String
         call.enqueue(object : Callback<List<Ocorrencia>> {
             override fun onResponse(call: Call<List<Ocorrencia>>, response: Response<List<Ocorrencia>>) {
                 if(response.isSuccessful){
                     ocorrencia = response.body()!!
                     for (ocorr in ocorrencia) {
+                        val dist = calculateDistance(lastLocation.latitude, lastLocation.longitude, ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
                         position = LatLng(ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
-                        mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao))
+                        mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao + "a" + dist + "metros"))
 
                     }
                 }
