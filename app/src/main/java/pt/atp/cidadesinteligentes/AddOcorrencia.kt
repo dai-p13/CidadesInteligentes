@@ -38,6 +38,7 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private lateinit var image: ImageView
     private lateinit var title: EditText
     private lateinit var description: EditText
+
     private lateinit var location: LatLng
 
     private lateinit var button: Button
@@ -120,7 +121,7 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 image.setImageURI(data?.data)
             }
             //imageView.setImageURI(imageUri)
-            //Log.d("IMAGEM", "image " + imageUri.toString() )
+            Log.d("IMAGEM", "image " + image.toString() )
         }
     }
 
@@ -150,7 +151,7 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val foto: MultipartBody.Part = MultipartBody.Part.createFormData("foto", imageFile.name, imgFileRequest)
         val titulo: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), title.text.toString())
         val descricao: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), description.text.toString())
-        val tipo: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), spinner.selectedItemPosition.toString() + 1)
+        val tipo: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), spinner.selectedItemPosition.toString())
         //val username: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), usernameS)
         val latitude: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), location.latitude.toString())
         val longitude: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), location.longitude.toString())
@@ -162,12 +163,13 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 if(response.isSuccessful){
                     val c: OutputPost = response.body()!!
                     Toast.makeText(applicationContext, c.titulo, Toast.LENGTH_LONG).show()
-                    Log.d("**** DIOGO", "ENVIOU PARA A BASE DE DADOS")
+                    Log.d("DIOGO", "ENVIOU PARA A BASE DE DADOS")
                 }
             }
 
             override fun onFailure(call: Call<OutputPost>, t: Throwable) {
                 Toast.makeText(applicationContext, "${t.message}", Toast.LENGTH_SHORT).show()
+                Log.d("DIMITRI", "NAO ENVIOU PARA A BASE DE DADOS")
             }
         })
     }
