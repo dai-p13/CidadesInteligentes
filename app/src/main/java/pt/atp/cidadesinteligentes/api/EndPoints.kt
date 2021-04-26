@@ -23,12 +23,12 @@ interface EndPoints{
 
     @Multipart
     @POST("/myslim/api/ocorrencias")
-    fun addOcorrencias(@Part("title") title: RequestBody,
-                       @Part("description") description: RequestBody,
-                       @Part("lat") lat: RequestBody,
-                       @Part("lon") lon: RequestBody,
-                       @Part image: MultipartBody.Part,
+    fun addOcorrencias(@Part("titulo") titulo: RequestBody,
+                       @Part("descricao") descricao: RequestBody,
+                       @Part("latitude") latitude: RequestBody,
+                       @Part("longitude") longitude: RequestBody,
+                       @Part foto: MultipartBody.Part,
                        //@Part("username") username: RequestBody,
-                       @Part("tipo") tipo: RequestBody,
+                       @Part("tipo_id") tipo_id: RequestBody,
                        ): Call<OutputPost>
 }
