@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
@@ -19,14 +18,12 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import pt.atp.cidadesinteligentes.api.EndPoints
 import pt.atp.cidadesinteligentes.api.Ocorrencia
 import pt.atp.cidadesinteligentes.api.ServiceBuilder
-import pt.atp.cidadesinteligentes.api.Tipo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,7 +31,6 @@ import retrofit2.Response
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var ocorrencia: List<Ocorrencia>
-    private lateinit var tipo: List<Tipo>
 
     // add to implement last known location
     private lateinit var lastLocation: Location
@@ -72,7 +68,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     for (ocorr in ocorrencia) {
                         val dist = calculateDistance(lastLocation.latitude, lastLocation.longitude, ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
                         position = LatLng(ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
-                        mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao + "a" + dist + "metros"))
+                        mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao + " " + "a" + dist + " " + "metros"))
 
                     }
                 }
@@ -122,6 +118,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        if(ActivityCompat.checkSelfPermission(this,
+                        android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+
+            return
+        } else {
+            mMap.isMyLocationEnabled = true
+        }
 
         // Add a marker in Sydney and move the camera
         /*val sydney = LatLng(-34.0, 151.0)

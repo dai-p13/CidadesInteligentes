@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.location.Location
 import android.net.Uri
 import android.os.Build
@@ -16,9 +17,13 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.get
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import pt.atp.cidadesinteligentes.api.EndPoints
 import pt.atp.cidadesinteligentes.api.OutputPost
 import pt.atp.cidadesinteligentes.api.ServiceBuilder
@@ -26,12 +31,14 @@ import pt.atp.cidadesinteligentes.api.Tipo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.*
 import java.sql.Array
 
 class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
-    private lateinit var imageView: ImageView
+    private lateinit var image: ImageView
     private lateinit var title: EditText
     private lateinit var description: EditText
+    private lateinit var location: LatLng
 
     private lateinit var button: Button
     private lateinit var buttonBack: Button
@@ -46,7 +53,7 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    private val pickImage = 100
+    private val pickImage = 1
     private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,11 +63,12 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         title = findViewById(R.id.title)
         description = findViewById(R.id.description)
 
-        imageView = findViewById(R.id.imageView)
+        image = findViewById(R.id.imageView)
 
         button = findViewById(R.id.buttonAddImage)
         button.setOnClickListener {
-            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            val gallery = Intent(Intent.ACTION_PICK)
+            gallery.type = "image/*"
             startActivityForResult(gallery, pickImage)
         }
         buttonBack = findViewById(R.id.cancel)
@@ -108,10 +116,11 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == pickImage) {
-            imageUri = data?.data
-            imageView.setImageURI(imageUri)
-
-            Log.d("IMAGEM", "image " + imageUri.toString() )
+            if (data != null){
+                image.setImageURI(data?.data)
+            }
+            //imageView.setImageURI(imageUri)
+            //Log.d("IMAGEM", "image " + imageUri.toString() )
         }
     }
 
@@ -135,10 +144,18 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     fun post(){
+        val imgBitmap: Bitmap = findViewById<ImageView>(R.id.imageView).drawable.toBitmap()
+        val imageFile: File = convertBitmapToFile("file", imgBitmap)
+        val imgFileRequest: RequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile)
+        val foto: MultipartBody.Part = MultipartBody.Part.createFormData("foto", imageFile.name, imgFileRequest)
+        val titulo: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), title.text.toString())
+        val descricao: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), description.text.toString())
+        val tipo: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), spinner.selectedItemPosition.toString() + 1)
+        //val username: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), usernameS)
+        val latitude: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), location.latitude.toString())
+        val longitude: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), location.longitude.toString())
         val request = ServiceBuilder.buildService(EndPoints::class.java)
-        val call = request.addOcorrencias(title.text.toString(), description.text.toString(),
-                lastLocation.latitude.toString(), lastLocation.longitude.toString(), imageUri?.let { getRealPathFromURI(it) },
-                1, spinner.selectedItemPosition + 1)
+        val call = request.addOcorrencias(titulo, descricao, latitude, longitude, foto, tipo)
 
         call.enqueue(object : Callback<OutputPost>{
             override fun onResponse(call: Call<OutputPost>, response: Response<OutputPost>) {
@@ -185,5 +202,32 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         super.onResume()
         startLocationUpdates()
         Log.d("**** DIOGO", "onResume - startLocationUpdates")
+    }
+
+    private fun convertBitmapToFile(fileName: String, bitmap: Bitmap): File {
+        //create a file to write bitmap data
+        val file = File(this@AddOcorrencia.cacheDir, fileName)
+        file.createNewFile()
+
+        //Convert bitmap to byte array
+        val bos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, bos)
+        val bitMapData = bos.toByteArray()
+
+        //write the bytes in file
+        var fos: FileOutputStream? = null
+        try {
+            fos = FileOutputStream(file)
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        }
+        try {
+            fos?.write(bitMapData)
+            fos?.flush()
+            fos?.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return file
     }
 }
