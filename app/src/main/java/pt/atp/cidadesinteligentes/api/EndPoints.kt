@@ -9,6 +9,9 @@ interface EndPoints{
     @GET("/myslim/api/ocorrencias")
     fun getOcorrencias(): Call<List<Ocorrencia>>
 
+    @GET("/myslim/api/users/{id}/ocorrencias")
+    fun getOcorrUser(@Path("id") id: Int): Call<List<Ocorrencia>>
+
     @GET("/myslim/api/users")
     fun getUsers(): Call<List<Users>>
 
@@ -31,4 +34,11 @@ interface EndPoints{
                        //@Part("username") username: RequestBody,
                        @Part("tipo_id") tipo_id: RequestBody,
                        ): Call<OutputPost>
+
+    @FormUrlEncoded
+    @POST("myslim/api/users")
+    fun login(
+            @Field("username") username: String,
+            @Field("password") password: String
+    ): Call<Users>
 }

@@ -21,4 +21,14 @@
         android:id="@+id/listarMinhas"
         android:title="@string/mine">
     </item>
+    <item
+    android:id="@+id/Notas"
+    android:title="@string/notes">
+    </item>
+    <item
+        android:id="@+id/logout"
+        android:title="@string/logout">
+    </item>
+
+
 </menu>

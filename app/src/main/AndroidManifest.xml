@@ -37,6 +37,7 @@
         <activity android:name=".EditNota" />
         <activity android:name=".AddNota" />
         <activity android:name=".Notas" />
+        <activity android:name=".ListaOcorrenciasUser"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

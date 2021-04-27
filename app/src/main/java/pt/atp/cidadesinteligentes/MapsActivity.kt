@@ -1,23 +1,27 @@
 package pt.atp.cidadesinteligentes
 
-import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.TextView
+
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
+
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,6 +35,7 @@ import retrofit2.Response
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var ocorrencia: List<Ocorrencia>
+    private lateinit var sharedPreferences: SharedPreferences
 
     // add to implement last known location
     private lateinit var lastLocation: Location
@@ -61,11 +66,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val request =  ServiceBuilder.buildService(EndPoints::class.java)
         val call = request.getOcorrencias()
         var position: LatLng
+        sharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
+        val id = sharedPreferences.getInt(R.string.id_shrpref.toString(), 0)
         call.enqueue(object : Callback<List<Ocorrencia>> {
             override fun onResponse(call: Call<List<Ocorrencia>>, response: Response<List<Ocorrencia>>) {
                 if(response.isSuccessful){
                     ocorrencia = response.body()!!
                     for (ocorr in ocorrencia) {
+                        if(id == ocorr.users_id){
+                            position = LatLng(ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
+                            mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
+                        } else {
+                            position = LatLng(ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
+                            mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
+                        }
                         val dist = calculateDistance(lastLocation.latitude, lastLocation.longitude, ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
                         position = LatLng(ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
                         mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao + " " + "a" + dist + " " + "metros"))
@@ -80,12 +94,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         })
 
         locationCallback = object : LocationCallback() {
-            @SuppressLint("SetTextI18n")
             override fun onLocationResult(p0: LocationResult) {
                 super.onLocationResult(p0)
                 lastLocation = p0.lastLocation
                 val loc = LatLng(lastLocation.latitude, lastLocation.longitude)
-
                 //mMap.addMarker(MarkerOptions().position(loc).title("Marker"))
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 15.0f))
                 // preenche as coordenadas
@@ -93,11 +105,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 // reverse geocoding
                 /*val address = getAddress(lastLocation.latitude, lastLocation.longitude)
-                findViewById<TextView>(R.id.txtmorada).setText("Morada: " + address)*/
+                findViewById<TextView>(com.google.android.gms.location.R.id.txtmorada).setText("Morada: " + address)
 
                 // distancia
-                /*findViewById<TextView>(R.id.textView3).setText("Distância: " + calculateDistance(lastLocation.latitude, lastLocation.longitude,
-                        position.latitude, position.longitude).toString())*/
+                findViewById<TextView>(com.google.android.gms.location.R.id.txtdistancia).setText("Distância: " + calculateDistance(
+                    lastLocation.latitude, lastLocation.longitude,
+                    continenteLat, continenteLong).toString())*/
 
                 Log.d("**** DIOGO", "new location received - " + loc.latitude + " -" + loc.longitude)
             }
@@ -167,7 +180,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun createLocationRequest() {
         locationRequest = LocationRequest()
         // interval specifies the rate at which your app will like to receive updates.
-        //locationRequest.interval = 10000
+        locationRequest.interval = 10000
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
     }
 
@@ -281,26 +294,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 })
                 true
             }
-            R.id.listarMinhas ->{
-                mMap.clear()
-                /*val request = ServiceBuilder.buildService(EndPoints::class.java)
-                val call = request.getSaneamento()
-                var position: LatLng
-                call.enqueue(object : Callback<List<Ocorrencia>> {
-                    override fun onResponse(call: Call<List<Ocorrencia>>, response: Response<List<Ocorrencia>>) {
-                        if(response.isSuccessful){
-                            ocorrencia = response.body()!!
-                            for (ocorr in ocorrencia) {
-                                position = LatLng(ocorr.latitude.toDouble(), ocorr.longitude.toDouble())
-                                mMap.addMarker(MarkerOptions().position(position).title(ocorr.titulo + " - " + ocorr.descricao))
-                            }
-                        }
-                    }
+            R.id.listarMinhas -> {
 
-                    override fun onFailure(call: Call<List<Ocorrencia>>, t: Throwable) {
-                        Toast.makeText(this@MapsActivity, "${t.message}", Toast.LENGTH_SHORT).show()
-                    }
-                })*/
+                val intent = Intent(this, ListaOcorrenciasUser::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.Notas -> {
+                val intent = Intent(this, Notas::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.logout -> {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                sharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
+                with(sharedPreferences.edit()) {
+                    putInt(R.string.id_shrpref.toString(), 0)
+                    commit()
+                }
+                Log.d("LOGOR", sharedPreferences.toString())
                 true
             }
 
@@ -308,4 +321,3 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 }
-

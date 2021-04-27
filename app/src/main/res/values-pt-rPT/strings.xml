@@ -34,4 +34,9 @@
     <string name="acidents">Acidentes</string>
     <string name="construction">Obras</string>
     <string name="sanitation">Saneamento</string>
+    <string name="id">ID</string>
+    <string name="failedLogin">Credenciais Invalidas</string>
+    <string name="noUser">Username Vazio</string>
+    <string name="noPass">Password Vazia</string>
+    <string name="logout">Terminar Sessão</string>
 </resources>
