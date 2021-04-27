@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Inteligents Cities</string>
+    <string name="share_preferencees_file" translatable="false">Shared Preferences File</string>
+    <string name="id_shrpref" translatable="false">id</string>
+    <string name="id">ID</string>
     <string name="reporte_problema">Report Problem</string>
     <string name="notes">Notes</string>
     <string name="title">Title</string>
@@ -24,4 +27,24 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="title_activity_maps">Map</string>
+    <string name="mine">Mine</string>
+    <string name="all">All</string>
+    <string name="remember">Remember Username</string>
+    <string name="error">Incorrect Username/ Password</string>
+    <string name="blank">Blank Username/ Password</string>
+    <string name="usernameP" translatable="false">usernameP</string>
+    <string name="passwordP" translatable="false">passwordP</string>
+    <string name="failedLogin">Invalid Credentials</string>
+    <string name="noUser">Blank Username</string>
+    <string name="noPass">Blank Password</string>
+    <string name="logout">Logout</string>
+    <string name="selectImage">Choose Image</string>
+    <string-array name="tipo">
+        <item>Acidente</item>
+        <item>Obras</item>
+        <item>Saneamento</item>
+    </string-array>
+    <string name="acidents">Accidents</string>
+    <string name="construction">Construction</string>
+    <string name="sanitation">Sanitation</string>
 </resources>

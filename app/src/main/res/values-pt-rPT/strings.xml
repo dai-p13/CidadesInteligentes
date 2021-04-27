@@ -24,4 +24,19 @@
     <string name="login">Inicie Sessão</string>
     <string name="username">Utilizador</string>
     <string name="password">Palavra-passe</string>
+    <string name="mine">Minhas</string>
+    <string name="all">Todas</string>
+    <string name="title_activity_maps">Mapa</string>
+    <string name="remember">Lembrar nome de utilizador</string>
+    <string name="error">Username/ Password Incorretos</string>
+    <string name="blank">Username/ Password Vazios</string>
+    <string name="selectImage">Escolha a imagem</string>
+    <string name="acidents">Acidentes</string>
+    <string name="construction">Obras</string>
+    <string name="sanitation">Saneamento</string>
+    <string name="id">ID</string>
+    <string name="failedLogin">Credenciais Invalidas</string>
+    <string name="noUser">Username Vazio</string>
+    <string name="noPass">Password Vazia</string>
+    <string name="logout">Terminar Sessão</string>
 </resources>

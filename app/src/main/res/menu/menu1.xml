@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/listarTodas"
+        android:title="@string/all">
+    </item>
+    <item
+        android:id="@+id/listarAcidentes"
+        android:title="@string/acidents">
+    </item>
+    <item
+        android:id="@+id/listarObras"
+        android:title="@string/construction">
+    </item>
+    <item
+        android:id="@+id/listarSaneamento"
+        android:title="@string/sanitation">
+    </item>
+    <item
+        android:id="@+id/listarMinhas"
+        android:title="@string/mine">
+    </item>
+    <item
+    android:id="@+id/Notas"
+    android:title="@string/notes">
+    </item>
+    <item
+        android:id="@+id/logout"
+        android:title="@string/logout">
+    </item>
+
+
+</menu>
