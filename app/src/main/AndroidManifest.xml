@@ -19,6 +19,9 @@
         android:theme="@style/Theme.CidadesInteligentes">
         <activity android:name=".AddOcorrencia"></activity>
         <activity android:name=".ListaOcorrencias" />
+        <activity android:name=".EditOcorrencia"></activity>
+        <activity android:name=".ListaOcorrencias" />
+        <activity android:name=".DeleteOcorrencia" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

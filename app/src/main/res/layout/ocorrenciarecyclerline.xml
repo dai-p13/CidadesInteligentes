@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/ocorrtit"
-        android:layout_width="133dp"
+        android:layout_width="76dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
@@ -20,17 +20,44 @@
 
     <TextView
         android:id="@+id/ocorrdesc"
-        android:layout_width="391dp"
+        android:layout_width="154dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginRight="7dp"
         android:layout_marginBottom="10dp"
+        android:layout_toStartOf="@+id/edit"
+        android:layout_toLeftOf="@+id/edit"
+        android:layout_toEndOf="@+id/ocorrtit"
+        android:layout_toRightOf="@+id/ocorrtit"
         android:gravity="center"
         android:text="@string/description"
         android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/deleteOco"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignTop="@id/ocorrtit"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="-6dp"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_baseline_delete_24"/>
+
+    <ImageButton
+        android:id="@+id/editOco"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignTop="@id/ocorrtit"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="-6dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_baseline_edit_24"/>
 
 
 </RelativeLayout>

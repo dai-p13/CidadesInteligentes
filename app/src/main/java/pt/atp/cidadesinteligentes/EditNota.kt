@@ -30,8 +30,8 @@ class EditNota : AppCompatActivity() {
         val editDesc = intent.getStringExtra(DESCRICAO)
 
 
-        findViewById<EditText>(R.id.title).setText(editTitl)
-        findViewById<EditText>(R.id.description).setText(editDesc)
+        findViewById<EditText>(R.id.ocotitle).setText(editTitl)
+        findViewById<EditText>(R.id.ocodescription).setText(editDesc)
 
         notaViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
 
@@ -44,8 +44,8 @@ class EditNota : AppCompatActivity() {
     }
 
     fun Editar(view: View) {
-        title = findViewById(R.id.title)
-        desc = findViewById(R.id.description)
+        title = findViewById(R.id.ocotitle)
+        desc = findViewById(R.id.ocodescription)
 
         var message3 = intent.getIntExtra(ID, 0)
         val replyIntent = Intent()

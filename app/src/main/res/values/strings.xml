@@ -32,6 +32,8 @@
     <string name="remember">Remember Username</string>
     <string name="error">Incorrect Username/ Password</string>
     <string name="blank">Blank Username/ Password</string>
+    <string name="errorOco">Error! Report not updated.</string>
+    <string name="warn">Title / Description blank</string>
     <string name="usernameP" translatable="false">usernameP</string>
     <string name="passwordP" translatable="false">passwordP</string>
     <string name="failedLogin">Invalid Credentials</string>

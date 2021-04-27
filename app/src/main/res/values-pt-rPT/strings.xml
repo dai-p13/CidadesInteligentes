@@ -39,4 +39,6 @@
     <string name="noUser">Username Vazio</string>
     <string name="noPass">Password Vazia</string>
     <string name="logout">Terminar Sessão</string>
+    <string name="errorOco">Erro. Ocorrencia nao editada</string>
+    <string name="warn">Titulo / Descrição Vazia</string>
 </resources>

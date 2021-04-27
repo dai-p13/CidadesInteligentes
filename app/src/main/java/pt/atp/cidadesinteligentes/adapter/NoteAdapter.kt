@@ -58,7 +58,7 @@ class NoteAdapter internal constructor(
             val intent = Intent(context, EditNota::class.java).apply {
                 putExtra(TITULO, titl)
                 putExtra(DESCRICAO, desc )
-                putExtra( ID,id)
+                putExtra(ID,id)
             }
             context.startActivity(intent)
         }
