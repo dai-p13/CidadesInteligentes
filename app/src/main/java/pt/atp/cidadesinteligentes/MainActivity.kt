@@ -10,7 +10,10 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import pt.atp.cidadesinteligentes.api.EndPoints
+import pt.atp.cidadesinteligentes.api.Ocorrencia
 import pt.atp.cidadesinteligentes.api.ServiceBuilder
 import pt.atp.cidadesinteligentes.api.Users
 import retrofit2.Call
@@ -22,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var user: EditText
     private lateinit var pwd: EditText
     private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,10 +53,20 @@ class MainActivity : AppCompatActivity() {
         if(id != 0){
             val intent = Intent(this@MainActivity, MapsActivity::class.java)
             startActivity(intent)
+            //realizarLogin()
             finish()
         }
 
+        user = findViewById(R.id.username)
+        pwd = findViewById(R.id.password)
+        //sharedPreferences = getSharedPreferences(getString(R.string.user_creds_file_key), Context.MODE_PRIVATE)
 
+        //val nomeUser = sharedPreferences.getString(getString(R.string.username), "")
+        /*val pwd = sharedPreferences.getString(getString(R.string.password), "")
+
+        if(nomeUser.toString().isNotEmpty() && pwd.toString().isNotEmpty()) {
+            TODO("Iniciar a atividade com login iniciado")
+        }*/
     }
 
     fun realizarLogin() {
