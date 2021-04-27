@@ -31,9 +31,9 @@ interface EndPoints{
                        @Part("latitude") latitude: RequestBody,
                        @Part("longitude") longitude: RequestBody,
                        @Part foto: MultipartBody.Part,
-                       //@Part("username") username: RequestBody,
+                       @Part("users_id") users_id: RequestBody,
                        @Part("tipo_id") tipo_id: RequestBody,
-                       ): Call<OutputPost>
+                       ): Call<Ocorrencia>
 
     @FormUrlEncoded
     @POST("myslim/api/users")
