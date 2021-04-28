@@ -36,7 +36,7 @@ class EditNota : AppCompatActivity() {
         notaViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
 
 
-        val buttonCancel = findViewById<Button>(R.id.cancel)
+        val buttonCancel = findViewById<Button>(R.id.cancel_edit)
         buttonCancel.setOnClickListener {
             val intent = Intent(this, Notas::class.java)
             startActivity(intent)

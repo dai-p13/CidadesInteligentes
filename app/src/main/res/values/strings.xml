@@ -34,8 +34,6 @@
     <string name="blank">Blank Username/ Password</string>
     <string name="errorOco">Error! Report not updated.</string>
     <string name="warn">Title / Description blank</string>
-    <string name="usernameP" translatable="false">usernameP</string>
-    <string name="passwordP" translatable="false">passwordP</string>
     <string name="failedLogin">Invalid Credentials</string>
     <string name="noUser">Blank Username</string>
     <string name="noPass">Blank Password</string>
@@ -49,4 +47,7 @@
     <string name="acidents">Accidents</string>
     <string name="construction">Construction</string>
     <string name="sanitation">Sanitation</string>
+    <string name="elim">Delete</string>
+    <string name="Type">Report Type</string>
+    <string name="user">Reported by:</string>
 </resources>

@@ -3,10 +3,10 @@ package pt.atp.cidadesinteligentes
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,12 +37,12 @@ class Notas : AppCompatActivity(), NoteAdapter.CallbackInterface {
         })
 
         val buttaoAd = findViewById<Button>(R.id.buttonAdd)
-        buttaoAd.setOnClickListener{
+        buttaoAd.setOnClickListener {
             val intent = Intent(this@Notas, AddNota::class.java)
             startActivityForResult(intent, newNoteActivityRequestCode)
         }
         val buttonBack = findViewById<Button>(R.id.buttonBack)
-        buttonBack.setOnClickListener{
+        buttonBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
@@ -69,11 +69,11 @@ class Notas : AppCompatActivity(), NoteAdapter.CallbackInterface {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.alert)
         builder.setMessage(R.string.del)
-        builder.setPositiveButton(R.string.yes){ dialog, which ->
+        builder.setPositiveButton(R.string.yes) { dialog, which ->
             Toast.makeText(applicationContext, R.string.delete, Toast.LENGTH_LONG).show()
             noteViewModel.deleteById(id)
         }
-        builder.setNegativeButton(R.string.no){dialog, which ->
+        builder.setNegativeButton(R.string.no) { dialog, which ->
         }
         builder.show()
 

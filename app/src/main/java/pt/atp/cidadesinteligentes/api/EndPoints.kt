@@ -3,25 +3,22 @@ package pt.atp.cidadesinteligentes.api
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.*
 
-interface EndPoints{
+interface EndPoints {
     @GET("/myslim/api/ocorrencias")
     fun getOcorrencias(): Call<List<Ocorrencia>>
 
     @GET("/myslim/api/users/{id}/ocorrencias")
     fun getOcorrUser(@Path("id") id: Int): Call<List<Ocorrencia>>
 
-    @GET("/myslim/api/users")
-    fun getUsers(): Call<List<Users>>
-
     @FormUrlEncoded
     @POST("/myslim/api/editaOcorrencia")
-    fun editaOcorrencia(@Field("titulo") first: String?, @Field("descricao") second: String?, @Field("id") third: Int?): Call<Ocorrencia>
+    fun editaOcorrencia(
+        @Field("id") first: Int?,
+        @Field("titulo") second: String?,
+        @Field("descricao") third: String?,
+    ): Call<Ocorrencia>
 
     @FormUrlEncoded
     @POST("/myslim/api/eliminaOcorrencia")
@@ -38,19 +35,20 @@ interface EndPoints{
 
     @Multipart
     @POST("/myslim/api/ocorrencias")
-    fun addOcorrencias(@Part("titulo") titulo: RequestBody,
-                       @Part("descricao") descricao: RequestBody,
-                       @Part("latitude") latitude: RequestBody,
-                       @Part("longitude") longitude: RequestBody,
-                       @Part foto: MultipartBody.Part,
-                       @Part("users_id") users_id: RequestBody,
-                       @Part("tipo_id") tipo_id: RequestBody,
-                       ): Call<Ocorrencia>
+    fun addOcorrencias(
+        @Part("titulo") titulo: RequestBody,
+        @Part("descricao") descricao: RequestBody,
+        @Part("latitude") latitude: RequestBody,
+        @Part("longitude") longitude: RequestBody,
+        @Part foto: MultipartBody.Part,
+        @Part("users_id") users_id: Int?,
+        @Part("tipo_id") tipo_id: Int?,
+    ): Call<OutputPost>
 
     @FormUrlEncoded
     @POST("myslim/api/users")
     fun login(
-            @Field("username") username: String,
-            @Field("password") password: String
+        @Field("username") username: String,
+        @Field("password") password: String
     ): Call<Users>
 }

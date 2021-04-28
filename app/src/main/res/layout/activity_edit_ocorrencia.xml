@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:visibility="visible"
     tools:context=".EditOcorrencia">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="316dp"
-        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/title"
@@ -20,22 +21,22 @@
 
     <EditText
         android:id="@+id/ocotitle"
-        android:layout_width="312dp"
-        android:layout_height="41dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-light"
         android:hint="@string/hint1"
         android:inputType="textAutoComplete"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="315dp"
-        android:layout_height="19dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:gravity="center"
         android:text="@string/description"
@@ -56,6 +57,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
 
     <LinearLayout
         android:id="@+id/jk"
@@ -79,7 +81,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ocodescription" />
 
         <Button
-            android:id="@+id/cancel"
+            android:id="@+id/cancel_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

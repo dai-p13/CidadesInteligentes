@@ -1,13 +1,13 @@
 package pt.atp.cidadesinteligentes
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.atp.cidadesinteligentes.adapter.OcorrenciaAdapter
@@ -19,7 +19,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ListaOcorrencias : AppCompatActivity() {
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,15 +36,19 @@ class ListaOcorrencias : AppCompatActivity() {
         val call = request.getOcorrencias()
 
         call.enqueue(object : Callback<List<Ocorrencia>> {
-            override fun onResponse(call: Call<List<Ocorrencia>>, response: Response<List<Ocorrencia>>) {
-                if (response.isSuccessful){
-                    recyclerView.apply{
+            override fun onResponse(
+                call: Call<List<Ocorrencia>>,
+                response: Response<List<Ocorrencia>>
+            ) {
+                if (response.isSuccessful) {
+                    recyclerView.apply {
                         setHasFixedSize(true)
                         layoutManager = LinearLayoutManager(this@ListaOcorrencias)
                         adapter = OcorrenciaAdapter(response.body()!!)
                     }
                 }
             }
+
             override fun onFailure(call: Call<List<Ocorrencia>>, t: Throwable) {
                 Toast.makeText(this@ListaOcorrencias, "${t.message}", Toast.LENGTH_SHORT).show()
             }
@@ -60,7 +63,7 @@ class ListaOcorrencias : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        return when (item.itemId){
+        return when (item.itemId) {
 
             R.id.listarTodas -> {
 

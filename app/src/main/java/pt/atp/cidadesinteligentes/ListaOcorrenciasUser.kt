@@ -31,16 +31,20 @@ class ListaOcorrenciasUser : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_ocorr)
         val request = ServiceBuilder.buildService(EndPoints::class.java)
 
-        sharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
+        sharedPreferences =
+            getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
 
         val id = sharedPreferences.getInt(R.string.id_shrpref.toString(), 0)
         val call = request.getOcorrUser(id)
         Log.d("QUALID", id.toString())
 
-        call.enqueue(object : Callback<List<Ocorrencia>>{
-            override fun onResponse(call: Call<List<Ocorrencia>>, response: Response<List<Ocorrencia>>) {
-                if (response.isSuccessful){
-                    recyclerView.apply{
+        call.enqueue(object : Callback<List<Ocorrencia>> {
+            override fun onResponse(
+                call: Call<List<Ocorrencia>>,
+                response: Response<List<Ocorrencia>>
+            ) {
+                if (response.isSuccessful) {
+                    recyclerView.apply {
                         setHasFixedSize(true)
                         layoutManager = LinearLayoutManager(this@ListaOcorrenciasUser)
                         adapter = OcorrenciaAdapter(response.body()!!)
@@ -62,10 +66,10 @@ class ListaOcorrenciasUser : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        return when (item.itemId){
+        return when (item.itemId) {
 
             R.id.listarTodas -> {
-                val intent = Intent(this@ListaOcorrenciasUser,MapsActivity::class.java)
+                val intent = Intent(this@ListaOcorrenciasUser, MapsActivity::class.java)
                 startActivity(intent)
                 true
 

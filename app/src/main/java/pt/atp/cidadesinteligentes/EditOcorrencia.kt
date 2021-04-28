@@ -6,14 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import pt.atp.cidadesinteligentes.adapter.DESC
 import pt.atp.cidadesinteligentes.adapter.IDOCO
 import pt.atp.cidadesinteligentes.adapter.OCORR
-import pt.atp.cidadesinteligentes.adapter.TITULO
 import pt.atp.cidadesinteligentes.api.EndPoints
 import pt.atp.cidadesinteligentes.api.Ocorrencia
 import pt.atp.cidadesinteligentes.api.ServiceBuilder
@@ -37,16 +35,23 @@ class EditOcorrencia : AppCompatActivity() {
 
         val save_Edit = findViewById<Button>(R.id.save)
         save_Edit.setOnClickListener {
-                guardarEdit2()
-                finish()
-            
+            guardarEdit2()
+            finish()
         }
+        val cancel_edit = findViewById<Button>(R.id.cancel_edit)
+        cancel_edit.setOnClickListener {
+            val intent = Intent(this, ListaOcorrenciasUser::class.java)
+            startActivity(intent)
+            finish()
+        }
+
 
     }
 
     fun guardarEdit2() {
         tit = findViewById(R.id.ocotitle)
         desc = findViewById(R.id.ocodescription)
+
 
         var id_oco_edit = intent.getIntExtra(IDOCO, 0)
 
@@ -61,27 +66,23 @@ class EditOcorrencia : AppCompatActivity() {
             Log.d("SIMMMM1", desc.text.toString())
 
             val request = ServiceBuilder.buildService(EndPoints::class.java)
-            val call = request.editaOcorrencia(tit.text.toString(), desc.text.toString(), id_oco_edit)
+            val call = request.editaOcorrencia(id_oco_edit, tit.text.toString(), desc.text.toString())
             Log.d("MOAO", call.toString())
             call.enqueue(object : Callback<Ocorrencia> {
                 override fun onResponse(call: Call<Ocorrencia>, response: Response<Ocorrencia>) {
                     if (response.isSuccessful){
                         Log.d("SIMMMM2", "s")
-                        Toast.makeText(
-                            applicationContext,
-                            R.string.save,
-                            Toast.LENGTH_LONG).show()
-
-
+                        Toast.makeText(applicationContext, R.string.save, Toast.LENGTH_LONG).show()
+                        val intent = Intent(this@EditOcorrencia, ListaOcorrenciasUser::class.java)
+                        startActivity(intent)
+                        finish()
                     }
                 }
 
                 override fun onFailure(call: Call<Ocorrencia>, t: Throwable) {
                     Log.d("NALOL", "n")
-                    Toast.makeText(
-                        applicationContext,
-                        R.string.error,
-                        Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, "${t.message}", Toast.LENGTH_SHORT).show()
+                    Log.d("NALOL", t.message.toString())
                 }
             })
 

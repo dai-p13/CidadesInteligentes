@@ -1,6 +1,5 @@
 package pt.atp.cidadesinteligentes
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -9,18 +8,15 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.location.Location
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.view.get
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import okhttp3.MediaType
@@ -31,7 +27,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.*
-import java.sql.Array
 
 class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private lateinit var image: ImageView
@@ -54,7 +49,7 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    private val pickImage = 1
+    private val pickImage = 100
     private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,7 +67,7 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             gallery.type = "image/*"
             startActivityForResult(gallery, pickImage)
         }
-        buttonBack = findViewById(R.id.cancel)
+        buttonBack = findViewById(R.id.cancel_edit)
         buttonBack.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
@@ -118,7 +113,7 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == pickImage) {
             if (data != null){
-                image.setImageURI(data.data)
+                image.setImageURI(data?.data)
             }
             //imageView.setImageURI(imageUri)
             Log.d("IMAGEM", "image " + image.toString() )
@@ -146,32 +141,49 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     fun post(){
         sharedPreferences = getSharedPreferences(getString(R.string.share_preferencees_file), Context.MODE_PRIVATE)
-        val id_user = sharedPreferences.getInt(R.string.id_shrpref.toString(), 0)
+        val id_user: Int = sharedPreferences.getInt(R.string.id_shrpref.toString(), 0)
+
         val imgBitmap: Bitmap = findViewById<ImageView>(R.id.imageView).drawable.toBitmap()
         val imageFile: File = convertBitmapToFile("file", imgBitmap)
         val imgFileRequest: RequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile)
         val foto: MultipartBody.Part = MultipartBody.Part.createFormData("foto", imageFile.name, imgFileRequest)
+
         val titulo: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), title.text.toString())
         val descricao: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), description.text.toString())
-        val tipo: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), spinner.selectedItemPosition.toString())
+        val tipo: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), spinner.selectedItem.toString())
         val user_id: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), id_user.toString())
-        val latitude: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), location.latitude.toString())
-        val longitude: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), location.longitude.toString())
-        val request = ServiceBuilder.buildService(EndPoints::class.java)
-        val call = request.addOcorrencias(titulo, descricao, latitude, longitude, foto, user_id,tipo)
+        val latitude: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), lastLocation.latitude.toString())
+        val longitude: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), lastLocation.longitude.toString())
+        Log.d("FOTO", foto.toString())
+        Log.d("TITULO", titulo.toString())
+        Log.d("DESC", descricao.toString())
+        Log.d("LAT", latitude.toString())
+        Log.d("LONG", longitude.toString())
+        Log.d("USER", id_user.toString())
+        Log.d("TIPO", tipo.toString())
 
-        call.enqueue(object : Callback<Ocorrencia>{
-            override fun onResponse(call: Call<Ocorrencia>, response: Response<Ocorrencia>) {
+        val request = ServiceBuilder.buildService(EndPoints::class.java)
+        val call = request.addOcorrencias(titulo, descricao, latitude, longitude, foto, id_user, spinner.selectedItemPosition + 1)
+
+        call.enqueue(object : Callback<OutputPost>{
+            override fun onResponse(call: Call<OutputPost>, response: Response<OutputPost>) {
+                Log.d("CALL", response.toString())
                 if(response.isSuccessful){
                     //val c: OutputPost = response.body()!!
                     Toast.makeText(applicationContext, R.string.save, Toast.LENGTH_LONG).show()
-                    Log.d("DIOGO", "ENVIOU PARA A BASE DE DADOS")
+                    Log.d("DIOGOF", "ENVIOU PARA A BASE DE DADOS")
+                    val intent = Intent(this@AddOcorrencia, MapsActivity::class.java)
+                    //verificar na stack de atividades se já existe esta atividade
+                    //se existir limpa e cria de novo
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    finish()
                 }
             }
 
-            override fun onFailure(call: Call<Ocorrencia>, t: Throwable) {
+            override fun onFailure(call: Call<OutputPost>, t: Throwable) {
                 Toast.makeText(applicationContext, "${t.message}", Toast.LENGTH_SHORT).show()
-                Log.d("DIMITRI", "NAO ENVIOU PARA A BASE DE DADOS")
+                Log.d("DIMITRI", t.message.toString())
             }
         })
     }

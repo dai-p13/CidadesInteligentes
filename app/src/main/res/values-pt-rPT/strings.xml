@@ -41,4 +41,7 @@
     <string name="logout">Terminar Sessão</string>
     <string name="errorOco">Erro. Ocorrencia nao editada</string>
     <string name="warn">Titulo / Descrição Vazia</string>
+    <string name="elim">Eliminar</string>
+    <string name="Type">Tipo Ocorrencia</string>
+    <string name="user">Ocorrencia feita por:</string>
 </resources>

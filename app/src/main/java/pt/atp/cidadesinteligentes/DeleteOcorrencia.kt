@@ -2,6 +2,7 @@ package pt.atp.cidadesinteligentes
 
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -36,26 +37,24 @@ class DeleteOcorrencia : AppCompatActivity() {
                 override fun onResponse(call: Call<Ocorrencia>, response: Response<Ocorrencia>) {
                     if (response.isSuccessful){
                         Log.d("SIMMMM2", "s")
-                        Toast.makeText(
-                                applicationContext,
-                                R.string.save,
-                                Toast.LENGTH_LONG).show()
-
-
+                        Toast.makeText(applicationContext, R.string.save, Toast.LENGTH_LONG).show()
+                        val intent = Intent(this@DeleteOcorrencia, ListaOcorrenciasUser::class.java)
+                        startActivity(intent)
+                        finish()
                     }
                 }
 
                 override fun onFailure(call: Call<Ocorrencia>, t: Throwable) {
                     Log.d("NALOL", "n")
-                    Toast.makeText(
-                            applicationContext,
-                            R.string.error,
-                            Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, "${t.message}", Toast.LENGTH_SHORT).show()
                 }
             })
             finish()
         }
         builder.setNegativeButton(R.string.no){dialog, which ->
+            val intent = Intent(this, ListaOcorrenciasUser::class.java)
+            startActivity(intent)
+            finish()
         }
         builder.show()
 

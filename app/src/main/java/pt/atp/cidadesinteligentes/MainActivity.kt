@@ -39,8 +39,6 @@ class MainActivity : AppCompatActivity() {
 
         val button2 = findViewById<Button>(R.id.buttonLogin)
         button2.setOnClickListener{
-            //val intent = Intent(this@MainActivity, MapsActivity::class.java)
-            //startActivity(intent)
             realizarLogin()
         }
 
@@ -53,20 +51,11 @@ class MainActivity : AppCompatActivity() {
         if(id != 0){
             val intent = Intent(this@MainActivity, MapsActivity::class.java)
             startActivity(intent)
-            //realizarLogin()
             finish()
         }
 
         user = findViewById(R.id.username)
         pwd = findViewById(R.id.password)
-        //sharedPreferences = getSharedPreferences(getString(R.string.user_creds_file_key), Context.MODE_PRIVATE)
-
-        //val nomeUser = sharedPreferences.getString(getString(R.string.username), "")
-        /*val pwd = sharedPreferences.getString(getString(R.string.password), "")
-
-        if(nomeUser.toString().isNotEmpty() && pwd.toString().isNotEmpty()) {
-            TODO("Iniciar a atividade com login iniciado")
-        }*/
     }
 
     fun realizarLogin() {

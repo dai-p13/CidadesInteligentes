@@ -2,12 +2,12 @@ package pt.atp.cidadesinteligentes
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
 class AddNota : AppCompatActivity() {
 
@@ -37,13 +37,14 @@ class AddNota : AppCompatActivity() {
             finish()
         }
 
-        val buttonBack = findViewById<Button>(R.id.cancel)
-        buttonBack.setOnClickListener{
+        val buttonBack = findViewById<Button>(R.id.cancel_edit)
+        buttonBack.setOnClickListener {
             val intent = Intent(this, Notas::class.java)
             startActivity(intent)
         }
 
     }
+
     companion object {
         const val EXTRA_REPLY_TITLE = "com.example.android.title"
         const val EXTRA_REPLY_DESCRIPTION = "com.example.android.description"
