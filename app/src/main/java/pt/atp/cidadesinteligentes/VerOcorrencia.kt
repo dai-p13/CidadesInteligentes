@@ -19,8 +19,8 @@ class VerOcorrencia : AppCompatActivity() {
     private lateinit var ocorrencia: List<Ocorrencia>
     private lateinit var desc: TextView
     private lateinit var tit: TextView
-    private lateinit var tipo: TextView
-    private lateinit var user: TextView
+    //private lateinit var tipo: TextView
+    //private lateinit var user: TextView
     private lateinit var foto: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +30,8 @@ class VerOcorrencia : AppCompatActivity() {
         desc = findViewById(R.id.ocodescriptionV)
         tit = findViewById(R.id.ocotitleV)
         foto = findViewById(R.id.imageView2)
-        tipo = findViewById(R.id.textView4)
-        user = findViewById(R.id.textView6)
+        //tipo = findViewById(R.id.textView4)
+        //user = findViewById(R.id.textView6)
 
         val buttonBack = findViewById<Button>(R.id.buttonBackVer)
         buttonBack.setOnClickListener {
@@ -52,8 +52,8 @@ class VerOcorrencia : AppCompatActivity() {
                     for (ocorr in ocorrencia) {
                         desc.setText(ocorr.descricao)
                         tit.setText(ocorr.titulo)
-                        tipo.setText(ocorr.tipo_id.toString())
-                        user.setText(ocorr.users_id.toString())
+                        //tipo.setText(ocorr.tipo_id)
+                        //user.setText(ocorr.users_id.toString())
                         Picasso.with(this@VerOcorrencia)
                             .load("https://cidintdiogo.000webhostapp.com/myslim/API/uploads/" + ocorr.foto + ".png")
                             .into(foto)

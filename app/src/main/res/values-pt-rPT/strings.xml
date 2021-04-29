@@ -44,4 +44,5 @@
     <string name="elim">Eliminar</string>
     <string name="Type">Tipo Ocorrencia</string>
     <string name="user">Ocorrencia feita por:</string>
+    <string name="image">Image</string>
 </resources>
