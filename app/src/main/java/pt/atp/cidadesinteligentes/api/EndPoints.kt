@@ -18,7 +18,7 @@ interface EndPoints {
         @Field("id") first: Int?,
         @Field("titulo") second: String?,
         @Field("descricao") third: String?,
-    ): Call<Ocorrencia>
+    ): Call<String>
 
     @FormUrlEncoded
     @POST("/myslim/api/eliminaOcorrencia")

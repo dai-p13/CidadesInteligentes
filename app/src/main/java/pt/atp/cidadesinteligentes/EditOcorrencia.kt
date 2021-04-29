@@ -2,18 +2,17 @@ package pt.atp.cidadesinteligentes
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import pt.atp.cidadesinteligentes.adapter.DESC
 import pt.atp.cidadesinteligentes.adapter.IDOCO
 import pt.atp.cidadesinteligentes.adapter.OCORR
 import pt.atp.cidadesinteligentes.api.EndPoints
-import pt.atp.cidadesinteligentes.api.Ocorrencia
 import pt.atp.cidadesinteligentes.api.ServiceBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,6 +37,7 @@ class EditOcorrencia : AppCompatActivity() {
             guardarEdit2()
             finish()
         }
+
         val cancel_edit = findViewById<Button>(R.id.cancel_edit)
         cancel_edit.setOnClickListener {
             val intent = Intent(this, ListaOcorrenciasUser::class.java)
@@ -53,24 +53,27 @@ class EditOcorrencia : AppCompatActivity() {
         desc = findViewById(R.id.ocodescription)
 
 
-        var id_oco_edit = intent.getIntExtra(IDOCO, 0)
+        var id_oco_edit: Int = intent.getIntExtra(IDOCO, 0)
+        val tituEnv: String = tit.text.toString()
+        val descEnv: String = desc.text.toString()
 
         Log.d("NAOOOOO", id_oco_edit.toString())
 
         val replyIntent = Intent()
-        if (TextUtils.isEmpty(desc.text.toString()) && TextUtils.isEmpty(tit.text.toString()))  {
+        if (TextUtils.isEmpty(desc.text.toString()) && TextUtils.isEmpty(tit.text.toString())) {
             setResult(Activity.RESULT_CANCELED, replyIntent)
-            Toast.makeText(this,R.string.warn, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.warn, Toast.LENGTH_SHORT).show()
 
         } else {
-            Log.d("SIMMMM1", desc.text.toString())
+            Log.d("TITULOENV", tituEnv)
+            Log.d("DESCENV", descEnv)
 
             val request = ServiceBuilder.buildService(EndPoints::class.java)
-            val call = request.editaOcorrencia(id_oco_edit, tit.text.toString(), desc.text.toString())
+            val call = request.editaOcorrencia(id_oco_edit, tituEnv, descEnv)
             Log.d("MOAO", call.toString())
-            call.enqueue(object : Callback<Ocorrencia> {
-                override fun onResponse(call: Call<Ocorrencia>, response: Response<Ocorrencia>) {
-                    if (response.isSuccessful){
+            call.enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    if (response.isSuccessful) {
                         Log.d("SIMMMM2", "s")
                         Toast.makeText(applicationContext, R.string.save, Toast.LENGTH_LONG).show()
                         val intent = Intent(this@EditOcorrencia, ListaOcorrenciasUser::class.java)
@@ -79,7 +82,7 @@ class EditOcorrencia : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<Ocorrencia>, t: Throwable) {
+                override fun onFailure(call: Call<String>, t: Throwable) {
                     Log.d("NALOL", "n")
                     Toast.makeText(applicationContext, "${t.message}", Toast.LENGTH_SHORT).show()
                     Log.d("NALOL", t.message.toString())

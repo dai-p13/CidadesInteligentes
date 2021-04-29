@@ -151,7 +151,6 @@ class AddOcorrencia : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val titulo: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), title.text.toString())
         val descricao: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), description.text.toString())
         val tipo: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), spinner.selectedItem.toString())
-        val user_id: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), id_user.toString())
         val latitude: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), lastLocation.latitude.toString())
         val longitude: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), lastLocation.longitude.toString())
         Log.d("FOTO", foto.toString())
